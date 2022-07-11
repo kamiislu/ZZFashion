@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.Feedback>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FeedbackID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePosted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedbackID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatePosted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-controller="Feedback"
+                   asp-route-id="@item.FeedbackID">Edit</a> |
+                <a asp-action="Details" asp-controller="Feedback"
+                   asp-route-id="@item.FeedbackID">Details</a> |
+                <a asp-action="Delete" asp-controller="Feedback"
+                   asp-route-id="@item.FeedbackID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
