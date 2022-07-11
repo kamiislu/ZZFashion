@@ -9,7 +9,17 @@
 </head>
 <body>
     <header>
-        @await Html.PartialAsync("_MarketingMenu.cshtml")
+        @if (Context.Session.GetString("Role") != null)
+        {
+            if (Context.Session.GetString("Role") == "Marketing")
+            {
+                @await Html.PartialAsync("_MarketingMenu.cshtml")
+            }
+            else if (Context.Session.GetString("Role") == "ProductManager")
+            {
+                @await Html.PartialAsync("_ProductMenu.cshtml")
+            }
+        }
     </header>
     <div class="container">
         <!-- 1st row -->
