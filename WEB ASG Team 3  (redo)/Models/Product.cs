@@ -22,7 +22,7 @@ namespace WEB2022Apr_P02_T3.Models
         [Display(Name = "Price ($)")]
         [DisplayFormat(DataFormatString = "{0:0.00}",
             ApplyFormatInEditMode = true)]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         //effective date
         [Display(Name = "Effective Date")]

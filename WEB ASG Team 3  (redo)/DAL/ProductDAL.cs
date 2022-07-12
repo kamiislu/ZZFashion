@@ -22,7 +22,7 @@ namespace WEB2022Apr_P02_T3.DAL
             .AddJsonFile("appsettings.json");
             Configuration = builder.Build();
             string strConn = Configuration.GetConnectionString(
-            "ZZFashionCRMConnectionString");
+            "ZZFashionConnectionString");
             //Instantiate a SqlConnection object with the
             //Connection String read.
             conn = new SqlConnection(strConn);
@@ -46,12 +46,11 @@ namespace WEB2022Apr_P02_T3.DAL
                 {
                     ProductId = reader.GetInt32(0), //0: 1st column
                     ProductTitle = reader.GetString(1), //1: 2nd column
-                                                        //Get the first character of a string
-                    ProductImage = reader.IsDBNull(2) ?
+                    ProductImage = !reader.IsDBNull(2) ?
                     reader.GetString(2) : string.Empty, //2: 3rd column
-                    Price = reader.GetDouble(3), //3: 4th column
-                    EffectiveDate = reader.GetDateTime(5), //5: 6th column
-                    Obsolete = reader.GetString(6), //6: 7th column
+                    Price = reader.GetDecimal(3), //3: 4th column
+                    EffectiveDate = reader.GetDateTime(4), //5: 6th column
+                    Obsolete = reader.GetString(5), //6: 7th column
                 }
                 );
             }
