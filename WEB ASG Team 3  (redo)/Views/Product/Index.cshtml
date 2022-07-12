@@ -5,7 +5,7 @@
 }
 
 <h4 class="PageTitle">View Products</h4>
-<p><a asp-action="Create">Create New Product</a></p>
+<p><a asp-controller="Product" asp-action="Create">Create New Product</a></p>
 <!-- Add a partial view to display a list of staff records
  in a tabular format. -->
 <partial name="~/Views/Product/_ViewProduct.cshtml" model="@Model" />

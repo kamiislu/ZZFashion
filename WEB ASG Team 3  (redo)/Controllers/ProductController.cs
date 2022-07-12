@@ -29,5 +29,31 @@ namespace WEB2022Apr_P02_T3.Controllers
             List<Product> productList = productContext.GetAllProduct();
             return View(productList);
         }
+
+        public ViewResult Create()
+        {
+            return View();
+        }
+        // POST: Staff/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Product product)
+        {
+
+            if (ModelState.IsValid)
+            {
+                //Add staff record to database
+                product.ProductId = productContext.Add(product);
+                //Redirect user to Staff/Index view
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                //Input validation fails, return to the Create view
+                //to display error message
+                return View(product);
+            }
+        }
+        
     }
 }

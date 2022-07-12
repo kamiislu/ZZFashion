@@ -60,6 +60,36 @@ namespace WEB2022Apr_P02_T3.DAL
             conn.Close();
             return productList;
         }
+
+        public int Add(Product product)
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify an INSERT SQL statement which will
+            //return the auto-generated StaffID after insertion
+            cmd.CommandText = @"INSERT INTO Product (ProductTitle, ProductImage, Price, EffectiveDate, Obsolete)
+OUTPUT INSERTED.ProductID
+VALUES(@ProductTitle, @ProductImage, @Price,
+@EffectiveDate, @Obsolete)";
+            //Define the parameters used in SQL statement, value for each parameter
+            //is retrieved from respective class's property.
+            cmd.Parameters.AddWithValue("@ProductTitle", product.ProductTitle);
+            cmd.Parameters.AddWithValue("@ProductImage", product.ProductImage);
+            cmd.Parameters.AddWithValue("@Price", product.Price);
+            cmd.Parameters.AddWithValue("@EffectiveDate", product.EffectiveDate);
+            cmd.Parameters.AddWithValue("@Obsolete", product.Obsolete);
+
+            //A connection to database must be opened before any operations made.
+            conn.Open();
+            //ExecuteScalar is used to retrieve the auto-generated
+            //StaffID after executing the INSERT SQL statement
+            product.ProductId = (int)cmd.ExecuteScalar();
+            //A connection should be closed after operations.
+            conn.Close();
+            //Return id when no error occurs.
+            return product.ProductId;
+        }
+
     }
 }
 
