@@ -49,6 +49,15 @@ namespace WEB2022Apr_P02_T3.Controllers
                 // Redirect user to the "StaffMain" view through an action
                 return RedirectToAction("ProductMain");
             }
+            else if (loginID == "SG-Orchard" && password == "passSales")
+            {
+                // Store Login ID in session with the key “LoginID”
+                HttpContext.Session.SetString("LoginID", loginID);
+                HttpContext.Session.SetString("Role", "SalesPersonnel");
+
+                // Redirect user to the "StaffMain" view through an action
+                return RedirectToAction("SalesMain");
+            }
             else
             {
                 // Store an error message in TempData for display at the index view
@@ -63,6 +72,11 @@ namespace WEB2022Apr_P02_T3.Controllers
             return View();
         }
         public ActionResult ProductMain()
+        {
+            return View();
+        }
+
+        public ActionResult SalesMain()
         {
             return View();
         }
