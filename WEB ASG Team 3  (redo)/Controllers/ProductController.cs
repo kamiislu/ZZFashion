@@ -19,22 +19,15 @@ namespace WEB2022Apr_P02_T3.Controllers
         public IActionResult Index()
         {
 
-            return View();
+            // Stop accessing the action if not logged in
+            // or account not in the "Staff" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+            (HttpContext.Session.GetString("Role") != "ProductManager"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            List<Product> productList = productContext.GetAllProduct();
+            return View(productList);
         }
-
-        public ActionResult Products()
-        {
-            List<Product> products = productContext.GetAllProduct();
-            ViewBag.products = products;
-            return View();
-        }
-        [HttpGet]
-        public ActionResult CreateProduct()
-        {
-            return View();
-        }
-
-
-    
     }
 }
