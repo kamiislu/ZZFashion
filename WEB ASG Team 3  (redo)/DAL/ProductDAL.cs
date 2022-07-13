@@ -74,7 +74,11 @@ VALUES(@ProductTitle, @ProductImage, @Price,
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
             cmd.Parameters.AddWithValue("@ProductTitle", product.ProductTitle);
-            cmd.Parameters.AddWithValue("@ProductImage", product.ProductImage);
+            if (product.ProductImage != null)
+                // A branch is assigned
+                cmd.Parameters.AddWithValue("@ProductImage", product.ProductImage);
+            else // No branch is assigned
+                cmd.Parameters.AddWithValue("@ProductImage", DBNull.Value);
             cmd.Parameters.AddWithValue("@Price", product.Price);
             cmd.Parameters.AddWithValue("@EffectiveDate", product.EffectiveDate);
             cmd.Parameters.AddWithValue("@Obsolete", product.Obsolete);
