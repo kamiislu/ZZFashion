@@ -20,17 +20,18 @@
         </div>
 
         <div class="col-md-4" style="margin-top:5%">
-            <img src="/Images/NoImage.png" style="width:40%;background-color:white" alt="Alternate Text" />
-            <label>Upload Product Image</label>
 
-            <input type="file" style="color:white;margin-top:2%" asp-for="ProductImage" value="" />
+            <h4>Upload Product Image</h4>
+            <img src="/Images/NoImage.png" style="width:40%;background-color:white" alt="Alternate Text" />
+            <input type="file" style="margin-top:2%" asp-for="ProductImage" value="" />
         </div>
         <div class="col-md-4">
-            <h3>*Product Id*</h3>
+
             <input type="text" class="form-control" placeholder="Enter Product Title" asp-for="ProductTitle" value="" />
             <input type="text" class="form-control" style="margin:5% 0%" placeholder="Enter Price ($20 - $500)" asp-for="Price" value="" />
             <input type="date" class="form-control" placeholder="Enter effective Date" asp-for="EffectiveDate" value="" />
-            <input type="submit" value="Create" style="margin-left:10%; margin-top:10%; margin-bottom:10%; padding:5px 35px;color:black;background-color:white"/>
+            <input type="text" class="form-control" style="margin:5% 0%" placeholder="Obsolete" asp-for="Obsolete" value="0"/>
+            <input type="submit" value="Create" style="margin-left:10%; margin-top:10%; margin-bottom:10%; padding:5px 35px;color:black;background-color:white" />
         </div>
     </div>
 </form>
