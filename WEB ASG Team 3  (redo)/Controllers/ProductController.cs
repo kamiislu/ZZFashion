@@ -54,6 +54,64 @@ namespace WEB2022Apr_P02_T3.Controllers
                 return View(product);
             }
         }
-        
+
+        public ActionResult Edit(int? id)
+        {
+            // Stop accessing the action if not logged in
+            // or account not in the "Staff" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+            (HttpContext.Session.GetString("Role") != "ProductManager"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (id == null)
+            { //Query string parameter not provided
+              //Return to listing page, not allowed to edit
+                return RedirectToAction("Index");
+            }
+            Product product = productContext.GetDetails(id.Value);
+            if (product == null)
+            {
+                //Return to listing page, not allowed to edit
+                return RedirectToAction("Index");
+            }
+            return View(product);
+        }
+        public ViewResult Update()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Update(Product product)
+        {
+
+            if (ModelState.IsValid)
+            {
+                //Update staff record to database
+                productContext.Update(product);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                //Input validation fails, return to the view
+                //to display error message
+                return View(product);
+            }
+        }
+
+        public ViewResult Delete()
+        {
+            return View();
+        }
+        // POST: StaffController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(Product product)
+        {
+            // Delete the staff record from database
+            productContext.Delete(product.ProductId);
+            return RedirectToAction("Index");
+        }
     }
 }
