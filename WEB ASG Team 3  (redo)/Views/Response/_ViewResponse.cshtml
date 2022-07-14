@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.Feedback>
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.Response>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -7,13 +7,19 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.ResponseID)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FeedbackID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DatePosted)
+                @Html.DisplayNameFor(model => model.MemberID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.StaffID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePosted)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Text)
@@ -25,20 +31,26 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.ResponseID)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.FeedbackID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DatePosted)
+                @Html.DisplayFor(modelItem => item.MemberID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.StaffID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatePosted)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
                 <a asp-action="Create" asp-controller="Response"
-                   asp-route-id="@item">Create Response</a>
+                   asp-route-id="@item.FeedbackID">Respond</a>
             </td>
         </tr>
 }

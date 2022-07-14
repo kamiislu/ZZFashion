@@ -1,0 +1,49 @@
+﻿@model WEB2022Apr_P02_T3.Models.Response
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Response</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FeedbackID" class="control-label"></label>
+                <input asp-for="FeedbackID" readonly class="form-control" />
+                <span asp-validation-for="FeedbackID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MemberID" class="control-label"></label>
+                <input asp-for="MemberID"  class="form-control" />
+                <span asp-validation-for="MemberID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StaffID" class="control-label"></label>
+                <input asp-for="StaffID" class="form-control" />
+                <span asp-validation-for="StaffID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DatePosted" class="control-label"></label>
+                <input asp-for="DatePosted" class="form-control" />
+                <span asp-validation-for="DatePosted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

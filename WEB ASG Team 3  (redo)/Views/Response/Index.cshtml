@@ -1,0 +1,11 @@
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.Response>
+
+@{
+    ViewData["Title"] = "Create Response";
+}
+
+<h4 class="PageTitle">View Staff</h4>
+<p><a asp-action="Create">Create New Staff</a></p>
+<!-- Add a partial view to display a list of staff records
+in a tabular format. -->
+<partial name="~/Views/Response/_ViewResponse.cshtml" model="@Model" />

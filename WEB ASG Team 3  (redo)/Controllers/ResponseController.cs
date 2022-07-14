@@ -6,14 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using WEB2022Apr_P02_T3.DAL;
 using WEB2022Apr_P02_T3.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WEB2022Apr_P02_T3.Controllers
 {
-    public class FeedbackController : Controller
+    public class ResponseController : Controller
     {
+        private ResponseDAL responseContext = new ResponseDAL();
         private FeedbackDAL feedbackContext = new FeedbackDAL();
-        // GET: FeedbackController
+        // GET: Response
         public ActionResult Index()
         {
             if ((HttpContext.Session.GetString("Role") == null) ||
@@ -21,23 +21,29 @@ namespace WEB2022Apr_P02_T3.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            List<Feedback> feedbackList = feedbackContext.GetAllFeedback();
-            return View(feedbackList);
+            List<Response> responseList = responseContext.GetAllResponse();
+            return View(responseList);
         }
 
-        // GET: FeedbackController/Details/5
+        // GET: Response/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: FeedbackController/Create
-        public ActionResult Create()
+        // GET: Response/Create
+        public ActionResult Create(int? id)
         {
-            return View();
+            if ((HttpContext.Session.GetString("Role") == null) ||
+                (HttpContext.Session.GetString("Role") != "Marketing"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            Response response= feedbackContext.GetDetails(id.Value);
+            return View(response);
         }
 
-        // POST: FeedbackController/Create
+        // POST: Response/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -52,13 +58,13 @@ namespace WEB2022Apr_P02_T3.Controllers
             }
         }
 
-        // GET: FeedbackController/Edit/5
+        // GET: Response/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: FeedbackController/Edit/5
+        // POST: Response/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -73,13 +79,13 @@ namespace WEB2022Apr_P02_T3.Controllers
             }
         }
 
-        // GET: FeedbackController/Delete/5
+        // GET: Response/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: FeedbackController/Delete/5
+        // POST: Response/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

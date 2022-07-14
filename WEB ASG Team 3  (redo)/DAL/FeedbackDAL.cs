@@ -45,17 +45,36 @@ namespace WEB2022Apr_P02_T3.DAL
                 new Feedback
                 {
                     FeedbackID = reader.GetInt32(0), //0: 1st column
+                    MemberID = reader.GetString(1),
                     DatePosted = reader.GetDateTime(2), //2: 3rd column
                     Title = reader.GetString(3), //3: 4th column
-                    Text = reader.GetString(4)
+                    Text = reader.GetString(4),
+                    Image = !reader.IsDBNull(5) ? reader.GetString(5) : null
                 }
-                );
+                ); 
             }
             //Close DataReader
             reader.Close();
             //Close the database connection
             conn.Close();
             return feedbackList;
+        }
+        public Response GetDetails(int feedbackID)
+        {
+            Response response = new Response();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT * FROM Feedback WHERE FeedbackID = @selectedFeedbackID";
+            cmd.Parameters.AddWithValue("@selectedFeedbackID", feedbackID);
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader(); 
+            while (reader.Read())
+            {
+                response.FeedbackID = feedbackID;
+                response.MemberID = reader.GetString(1);
+            }
+            reader.Close();
+            conn.Close();
+            return response;
         }
     }
 }
