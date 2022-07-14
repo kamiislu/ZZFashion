@@ -55,7 +55,7 @@ namespace WEB2022Apr_P02_T3.Controllers
             }
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Update(int? id)
         {
             // Stop accessing the action if not logged in
             // or account not in the "Staff" role
@@ -77,10 +77,8 @@ namespace WEB2022Apr_P02_T3.Controllers
             }
             return View(product);
         }
-        public ViewResult Update()
-        {
-            return View();
-        }
+
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Update(Product product)

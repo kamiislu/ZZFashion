@@ -100,7 +100,7 @@ VALUES(@ProductTitle, @ProductImage, @Price,
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
             //Specify the SELECT SQL statement that
-            //retrieves all attributes of a staff record.
+            //retrieves all attributes of a product record.
             cmd.CommandText = @"SELECT * FROM Product
  WHERE ProductID = @selectedProductID";
             //Define the parameter used in SQL statement, value for the
@@ -117,11 +117,11 @@ VALUES(@ProductTitle, @ProductImage, @Price,
                 {
                     // Fill product object with values from the data reader
                     product.ProductId = productId;
-                    product.ProductTitle = !reader.IsDBNull(1) ? reader.GetString(1) : null;
+                    product.ProductTitle = reader.GetString(1);
                     product.ProductImage = !reader.IsDBNull(2) ? reader.GetString(2) : null;
                     product.Price = !reader.IsDBNull(3) ? reader.GetDecimal(3) : (Decimal)0.00;
                     product.EffectiveDate = reader.GetDateTime(4);
-                    product.Obsolete = !reader.IsDBNull(5) ? reader.GetString(5) : null;
+                    product.Obsolete = reader.GetString(5);
                 }
             }
             //Close data reader
@@ -142,6 +142,7 @@ VALUES(@ProductTitle, @ProductImage, @Price,
 WHERE ProductID = @selectedProductID";
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
+            cmd.Parameters.AddWithValue("@selectedProductID", product.ProductId);
             cmd.Parameters.AddWithValue("@ProductTitle", product.ProductTitle);
             if (product.ProductImage != null)
                 // A branch is assigned
