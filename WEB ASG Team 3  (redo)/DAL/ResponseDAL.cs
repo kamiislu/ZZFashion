@@ -35,8 +35,8 @@ namespace WEB2022Apr_P02_T3.DAL
             cmd.CommandText = @"INSERT INTO Response (FeedbackID, MemberID,
 StaffID, DateTimePosted, Text)
 OUTPUT INSERTED.ResponseID
-VALUES(@feedbackID, @memberID, @staffID, @dateTimePosted, @text
-        }";
+VALUES(@feedbackID, @memberID, @staffID, @dateTimePosted, @text)
+        ";
             cmd.Parameters.AddWithValue("@feedbackID", response.FeedbackID);
             cmd.Parameters.AddWithValue("@MemberID", response.MemberID);
             cmd.Parameters.AddWithValue("@staffID", response.StaffID);

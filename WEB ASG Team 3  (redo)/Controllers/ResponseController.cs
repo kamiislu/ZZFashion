@@ -40,21 +40,28 @@ namespace WEB2022Apr_P02_T3.Controllers
                 return RedirectToAction("Index", "Home");
             }
             Response response= feedbackContext.GetDetails(id.Value);
+            response.StaffID = HttpContext.Session.GetString("Role");
             return View(response);
         }
 
         // POST: Response/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Response response)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                //Add staff record to database
+                response.DatePosted = DateTime.Now;
+                response.ResponseID = responseContext.Create(response);
+                //Redirect user to Staff/Index view
+                return RedirectToAction("Index");
             }
-            catch
+            else
             {
-                return View();
+                //Input validation fails, return to the Create view
+                //to display error message
+                return View(response);
             }
         }
 
