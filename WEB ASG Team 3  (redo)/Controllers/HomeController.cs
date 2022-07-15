@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using WEB2022Apr_P02_T3.DAL;
 using WEB2022Apr_P02_T3.Models;
 using Microsoft.AspNetCore.Http;
 
@@ -12,6 +13,7 @@ namespace WEB2022Apr_P02_T3.Controllers
 {
     public class HomeController : Controller
     {
+        private CustomerDAL customerContext = new CustomerDAL();
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -58,6 +60,15 @@ namespace WEB2022Apr_P02_T3.Controllers
                 // Redirect user to the "StaffMain" view through an action
                 return RedirectToAction("SalesMain");
             }
+            else if (customerContext.ValidatePassword(loginID, password))
+            {
+                // Store Login ID in session with the key “LoginID”
+                HttpContext.Session.SetString("LoginID", loginID);
+                HttpContext.Session.SetString("Role", "Customer");
+
+                // Redirect user to the "CustomerMain" view through an action
+                return RedirectToAction("CustomerMain");
+            }
             else
             {
                 // Store an error message in TempData for display at the index view
@@ -75,7 +86,10 @@ namespace WEB2022Apr_P02_T3.Controllers
         {
             return View();
         }
-
+        public ActionResult CustomerMain()
+        {
+            return View();
+        }
         public ActionResult SalesMain()
         {
             return View();
