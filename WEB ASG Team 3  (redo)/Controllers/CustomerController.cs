@@ -53,22 +53,45 @@ namespace WEB2022Apr_P02_T3.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePassword(string pwd)
+        public ActionResult ChangePassword(IFormCollection formData)
         {
             string id = HttpContext.Session.GetString("LoginID");
             Customer cust = customerContext.GetDetails(id);
-            if (ModelState.IsValid)
+            string pwd = cust.MPassword;
+            string oldPwd = formData["txtPassword"].ToString();
+            string newPwd = formData["txtNewPassword"].ToString();
+            string confirmPwd = formData["txtConfirmPassword"].ToString();
+           if (oldPwd == pwd && newPwd == "" && confirmPwd == "")
             {
-                //Update staff record to database
-                customerContext.ChangePassword(cust);
-                return RedirectToAction("Index");
+                // Store an error message in TempData for display at the index view
+                TempData["newMessage"] = "New password cannot be blank!";
             }
-            else
+            else if (confirmPwd == pwd)
             {
-                //Input validation fails, return to the view
-                //to display error message
-                return View();
+                // Store an error message in TempData for display at the index view
+                TempData["confirmMessage"] = "New password cannot be the same as old!";
             }
+            else if (oldPwd == pwd && newPwd == confirmPwd)
+            {
+                customerContext.ChangePassword(confirmPwd, id);
+            }
+            else if (oldPwd == pwd  && newPwd != confirmPwd)
+            {
+                // Store an error message in TempData for display at the index view
+                TempData["confirmMessage"] = "Wrong confirm password!";
+            }
+            else if (oldPwd == "" && newPwd == "" && confirmPwd == "")
+            {
+                // Store an error message in TempData for display at the index view
+                TempData["confirmMessage"] = "Please input your new password!";
+            }
+            else if (oldPwd != pwd)
+            {
+                // Store an error message in TempData for display at the index view
+                TempData["Message"] = "Incorrect password!";
+            }
+   
+            return View();
         }
     }
 }
