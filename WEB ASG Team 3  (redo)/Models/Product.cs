@@ -21,7 +21,7 @@ namespace WEB2022Apr_P02_T3.Models
         //price
         [Display(Name = "Price ($)")]
         [Range(20, 500)]
-        [DisplayFormat(DataFormatString = "{0:0.00}",
+        [DisplayFormat(DataFormatString = "{0:#,##0.00}",
             ApplyFormatInEditMode = true)]
         public decimal Price { get; set; }
 

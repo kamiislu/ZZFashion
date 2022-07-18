@@ -98,9 +98,29 @@ namespace WEB2022Apr_P02_T3.Controllers
             }
         }
 
-        public ViewResult Delete()
+
+
+        public ActionResult Delete(int? id)
         {
-            return View();
+            // Stop accessing the action if not logged in
+            // or account not in the "Staff" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+            (HttpContext.Session.GetString("Role") != "ProductManager"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (id == null)
+            { //Query string parameter not provided
+              //Return to listing page, not allowed to edit
+                return RedirectToAction("Index");
+            }
+            Product product = productContext.GetDetails(id.Value);
+            if (product == null)
+            {
+                //Return to listing page, not allowed to edit
+                return RedirectToAction("Index");
+            }
+            return View(product);
         }
         // POST: StaffController/Delete/5
         [HttpPost]
@@ -111,5 +131,8 @@ namespace WEB2022Apr_P02_T3.Controllers
             productContext.Delete(product.ProductId);
             return RedirectToAction("Index");
         }
+
+
+
     }
 }

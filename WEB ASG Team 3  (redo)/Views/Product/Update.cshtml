@@ -28,7 +28,9 @@
             <label asp-for="ProductImage"
                    class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9 col-md-5">
+                <img src="~/Images/@Model.ProductImage" style="width:40%;background-color:white" alt="Alternate Text" />
                 <input asp-for="ProductImage" class="form-control" />
+                <input type="file" style="margin-top:2%" asp-for="ProductImage" value="@Model.ProductImage"/>
                 <span asp-validation-for="ProductImage"
                       class="text-danger"></span>
             </div>
@@ -39,7 +41,7 @@
             <div class="col-sm-9 col-md-5">
                 <input asp-for="Price"
                        class="form-control" />
-                <span asp-validation-for="ProductImage"
+                <span asp-validation-for="Price"
                       class="text-danger"></span>
             </div>
         </div>
@@ -56,6 +58,7 @@
                    class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9 col-md-5">
                 <input asp-for="Obsolete" class="form-control" />
+                <input type="checkbox" name="Obsolete" value="" /><label>Update as obsolete</label>
                 <span asp-validation-for="Obsolete"
                       class="text-danger"></span>
             </div>
@@ -68,6 +71,7 @@
         </div>
         <div>
             <a asp-action="Index">Back to List</a>
+
         </div>
     </fieldset>
 </form>
