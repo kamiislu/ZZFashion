@@ -65,9 +65,17 @@ namespace WEB2022Apr_P02_T3.Controllers
                 // Store Login ID in session with the key “LoginID”
                 HttpContext.Session.SetString("LoginID", loginID);
                 HttpContext.Session.SetString("Role", "Customer");
-
-                // Redirect user to the "CustomerMain" view through an action
-                return RedirectToAction("CustomerMain");
+                if (password == "AbC@123#")
+                {
+                    TempData["Title"] = "Change Default Password";
+                    return RedirectToAction("ChangePassword", "Customer");
+                }
+                else
+                {
+                    TempData["Title"] = "Change Password";
+                    // Redirect user to the "CustomerMain" view through an action
+                    return RedirectToAction("CustomerMain");
+                }
             }
             else
             {

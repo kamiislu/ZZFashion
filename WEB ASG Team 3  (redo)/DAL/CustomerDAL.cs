@@ -111,7 +111,7 @@ namespace WEB2022Apr_P02_T3.DAL
             conn.Close();
             return validation;
         }
-        public int ChangePassword(Customer cust)
+        public int ChangePassword(string pwd, string id)
         {
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
@@ -120,8 +120,8 @@ namespace WEB2022Apr_P02_T3.DAL
                                 WHERE MemberID = @customerID";
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
-            cmd.Parameters.AddWithValue("@password", cust.MPassword);
-            cmd.Parameters.AddWithValue("@customerID", cust.MemberId);
+            cmd.Parameters.AddWithValue("@customerID", id);
+            cmd.Parameters.AddWithValue("@password", pwd);
             //Open a database connection
             conn.Open();
             //ExecuteNonQuery is used for UPDATE and DELETE
