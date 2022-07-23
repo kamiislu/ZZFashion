@@ -145,9 +145,9 @@ WHERE ProductID = @selectedProductID";
             cmd.Parameters.AddWithValue("@selectedProductID", product.ProductId);
             cmd.Parameters.AddWithValue("@ProductTitle", product.ProductTitle);
             if (product.ProductImage != null)
-                // A branch is assigned
+                // A image is assigned
                 cmd.Parameters.AddWithValue("@ProductImage", product.ProductImage);
-            else // No branch is assigned
+            else // No image is assigned
                 cmd.Parameters.AddWithValue("@ProductImage", DBNull.Value);
             cmd.Parameters.AddWithValue("@Price", product.Price);
             cmd.Parameters.AddWithValue("@EffectiveDate", product.EffectiveDate);

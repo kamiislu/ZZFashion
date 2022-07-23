@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace WEB2022Apr_P02_T3.Models
 {
@@ -33,5 +34,8 @@ namespace WEB2022Apr_P02_T3.Models
 
         //obsolete
         public string Obsolete { get; set; }
+
+        public IFormFile fileToUpload { get; set; }
+        public bool isActive { get; set; }
     }
 }

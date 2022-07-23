@@ -15,6 +15,8 @@ namespace WEB2022Apr_P02_T3.Controllers
     public class ProductController : Controller
     {
         private ProductDAL productContext = new ProductDAL();
+        //private List<ProductController> obsoleteList =new List<ProductController>();
+
 
         public IActionResult Index()
         {
@@ -64,25 +66,92 @@ namespace WEB2022Apr_P02_T3.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
             if (id == null)
             { //Query string parameter not provided
               //Return to listing page, not allowed to edit
                 return RedirectToAction("Index");
             }
             Product product = productContext.GetDetails(id.Value);
+
             if (product == null)
             {
                 //Return to listing page, not allowed to edit
                 return RedirectToAction("Index");
             }
+
+            if (product.Obsolete == "1")
+            {
+                product.isActive = false;
+            }
+            else if (product.Obsolete == "0")
+            {
+                product.isActive = true;
+            }
+
             return View(product);
+ 
         }
 
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(Product product)
+        public IActionResult Update(Product product)
         {
+            if (product.fileToUpload != null &&
+product.fileToUpload.Length > 0)
+            {
+                try
+                {
+                    // Find the filename extension of the file to be uploaded.
+                    string fileExt = Path.GetExtension(
+                     product.fileToUpload.FileName);
+                    // Rename the uploaded file with the staff’s name.
+                    string uploadedFile = product.fileToUpload + fileExt;
+                    // Get the complete path to the images folder in server
+                    string savePath = Path.Combine(
+                     Directory.GetCurrentDirectory(),
+                     "wwwroot\\images", uploadedFile);
+                    // Upload the file to server
+                    using (var fileSteam = new FileStream(
+                     savePath, FileMode.Create))
+                    {
+                        product.fileToUpload.CopyTo(fileSteam);
+                    }
+                    product.ProductImage = uploadedFile;
+                    ViewData["Message"] = "File uploaded successfully.";
+                }
+                catch (IOException)
+                {
+                    //File IO error, could be due to access rights denied
+                    ViewData["Message"] = "File uploading fail!";
+                }
+                catch (Exception ex) //Other type of error
+                {
+                    ViewData["Message"] = ex.Message;
+                }
+            }
+            else if (product.fileToUpload == null)
+            {
+                if (product.ProductImage != null)
+                {
+
+                }
+            }
+            else
+            {
+      
+                
+            }
+
+           if (product.isActive == false)
+            {
+                product.Obsolete = "1";
+            }
+           else if (product.isActive == true)
+            {
+                product.Obsolete = "0";
+            }
 
             if (ModelState.IsValid)
             {
