@@ -15,7 +15,6 @@ namespace WEB2022Apr_P02_T3.Controllers
     public class ProductController : Controller
     {
         private ProductDAL productContext = new ProductDAL();
-        //private List<ProductController> obsoleteList =new List<ProductController>();
 
 
         public IActionResult Index()

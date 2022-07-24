@@ -6,6 +6,7 @@
 <h4 class="PageTitle">Update Product</h4>
 
 <hr />
+<a asp-action="Index">Back to List</a>
 <form asp-action="Update" enctype="multipart/form-data">
     <fieldset class="FormContent">
         <div class="form-group row">
@@ -61,6 +62,7 @@
                        class="form-control-plaintext" />
             </div>
         </div>
+
         <div class="form-group row">
             <label asp-for="Obsolete"
                    class="col-sm-3 col-form-label"></label>
@@ -74,11 +76,11 @@
         <div class="form-group row">
             <div class="col-sm-9 offset-sm-3">
                 <input type="submit" value="Save"
-                       class="btn btn-primary" />
+                       style="margin-left:10%; margin-top:10%; margin-bottom:10%; padding:5px 35px;color:black;background-color:white" />
             </div>
         </div>
         <div>
-            <a asp-action="Index">Back to List</a>
+
 
         </div>
     </fieldset>
