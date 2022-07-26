@@ -130,5 +130,46 @@ namespace WEB2022Apr_P02_T3.DAL
             conn.Close();
             return count;
         }
+
+        public List<Customer> GetAllCustomer()
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify the SELECT SQL statement 
+            cmd.CommandText = @"SELECT * FROM Customer ORDER BY MemberID";
+            //Open a database connection
+            conn.Open();
+            //Execute the SELECT SQL through a DataReader
+            SqlDataReader reader = cmd.ExecuteReader();
+            //Read all records until the end, save data into a staff list
+            List<Customer> customerList = new List<Customer>();
+            while (reader.Read())
+            {
+                customerList.Add(
+                new Customer
+                {
+                    MemberId = reader.GetString(0), //0: 1st column
+                    MName = reader.GetString(1), //1: 2nd column
+                                                 //Get the first character of a string
+                    MGender = reader.GetString(2)[0],//2: 3rd column
+                    MBirthDate = reader.GetDateTime(3), //3: 4th column
+                    MAddress = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty, //4: 5th column
+                    MCountry = reader.GetString(5), //5: 6th column
+                    MTelNo = !reader.IsDBNull(6) ? reader.GetString(6) : string.Empty , //6: 7th column
+                    MEmailAddr = !reader.IsDBNull(7) ? reader.GetString(7) : string.Empty, //7: 8th column
+                    MPassword = reader.GetString(8), //8: 9th column
+                }
+
+                ) ;
+
+            }
+            //Close DataReader
+            reader.Close();
+            //Close the database connection
+            conn.Close();
+            return customerList;
+        }
     }
+
+         
 }

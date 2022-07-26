@@ -15,13 +15,25 @@ namespace WEB2022Apr_P02_T3.Controllers
     public class CustomerController : Controller
     {
         private CustomerDAL customerContext = new CustomerDAL();
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            if ((HttpContext.Session.GetString("Role") == null) ||
+            if ((HttpContext.Session.GetString("Role")!= null) || 
+            (HttpContext.Session.GetString("Role") == "SalesPersonnel"))
+            {
+                List<Customer> customerList = customerContext.GetAllCustomer();
+                return View(customerList);
+            }
+
+            else if ((HttpContext.Session.GetString("Role") == null) ||
             (HttpContext.Session.GetString("Role") != "Customer"))
             {
                 return RedirectToAction("Index", "Home");
             }
+
+            return View();
+        }
+        public ViewResult Create()
+        {
             return View();
         }
         public ActionResult Login()
@@ -93,5 +105,7 @@ namespace WEB2022Apr_P02_T3.Controllers
    
             return View();
         }
+
+
     }
 }
