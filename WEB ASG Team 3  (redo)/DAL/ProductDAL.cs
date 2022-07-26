@@ -182,6 +182,41 @@ WHERE ProductID = @selectedProductID";
             //Return number of row of staff record updated or deleted
             return rowAffected;
         }
+
+        public List<Product> GetNewProduct()
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify the SELECT SQL statement
+            cmd.CommandText = @"SELECT * FROM Product WHERE DATEPART(Month, EffectiveDate) = DATEPART(Month,GETDATE())
+            AND DATEPART(Year, EffectiveDate)= DATEPART(Year, GETDATE())";
+            //Open a database connection
+            conn.Open();
+            //Execute the SELECT SQL through a DataReader
+            SqlDataReader reader = cmd.ExecuteReader();
+            //Read all records until the end, save data into a staff list
+            List<Product> newProductList = new List<Product>();
+            while (reader.Read())
+            {
+                newProductList.Add(
+                new Product
+                {
+                    ProductId = reader.GetInt32(0), //0: 1st column
+                    ProductTitle = reader.GetString(1), //1: 2nd column
+                    ProductImage = !reader.IsDBNull(2) ?
+                    reader.GetString(2) : string.Empty, //2: 3rd column
+                    Price = reader.GetDecimal(3), //3: 4th column
+                    EffectiveDate = reader.GetDateTime(4), //5: 6th column
+                    Obsolete = reader.GetString(5), //6: 7th column
+                }
+                );
+            }
+            //Close DataReader
+            reader.Close();
+            //Close the database connection
+            conn.Close();
+            return newProductList;
+        }
     }
 }
 

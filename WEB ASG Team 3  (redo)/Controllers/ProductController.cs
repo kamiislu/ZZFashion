@@ -201,6 +201,14 @@ product.fileToUpload.Length > 0)
         }
 
 
+        public IActionResult NewProduct()
+        {
+
+            List<Product> newProductList = productContext.GetNewProduct();
+            return View(newProductList);
+        }
+
+
 
     }
 }
