@@ -9,37 +9,50 @@ using WEB2022Apr_P02_T3.DAL;
 using WEB2022Apr_P02_T3.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WEB2022Apr_P02_T3.Controllers
 {
     public class CustomerController : Controller
     {
         private CustomerDAL customerContext = new CustomerDAL();
-        public ActionResult Index()
+        public ActionResult Index(string searchString, string searchName)
         {
-            if ((HttpContext.Session.GetString("Role")!= null) || 
-            (HttpContext.Session.GetString("Role") == "SalesPersonnel"))
-            {
-                List<Customer> customerList = customerContext.GetAllCustomer();
-                return View(customerList);
-            }
-
-            else if ((HttpContext.Session.GetString("Role") == null) ||
-            (HttpContext.Session.GetString("Role") != "Customer"))
+            if ((HttpContext.Session.GetString("Role") == null) || 
+                (HttpContext.Session.GetString("Role") != "SalesPersonnel"))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            return View();
+
+            //List<Customer> customerList = customerContext.GetAllCustomer();
+
+            var searchCustomer = from c in customerContext.GetAllCustomer()
+                                 select c;
+
+            var searchByName = from n in customerContext.GetAllCustomer()
+                               orderby n.MName
+                               select n;
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchCustomer = searchCustomer.Where(c => c.MemberId.Contains(searchString));
+
+            }
+
+
+
+
+            return View(searchCustomer);
         }
-        public ViewResult Create()
-        {
-            return View();
-        }
+
+
+
         public ActionResult Login()
-        {
-            return View();
-        }
+            {
+                return View();
+            }
         public ActionResult ChangePassword()
         {
             string id = HttpContext.Session.GetString("LoginID");

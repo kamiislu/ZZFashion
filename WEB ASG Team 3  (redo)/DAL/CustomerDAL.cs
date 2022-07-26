@@ -155,12 +155,12 @@ namespace WEB2022Apr_P02_T3.DAL
                     MBirthDate = reader.GetDateTime(3), //3: 4th column
                     MAddress = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty, //4: 5th column
                     MCountry = reader.GetString(5), //5: 6th column
-                    MTelNo = !reader.IsDBNull(6) ? reader.GetString(6) : string.Empty , //6: 7th column
+                    MTelNo = !reader.IsDBNull(6) ? reader.GetString(6) : string.Empty, //6: 7th column
                     MEmailAddr = !reader.IsDBNull(7) ? reader.GetString(7) : string.Empty, //7: 8th column
                     MPassword = reader.GetString(8), //8: 9th column
                 }
 
-                ) ;
+                );
 
             }
             //Close DataReader
@@ -169,7 +169,75 @@ namespace WEB2022Apr_P02_T3.DAL
             conn.Close();
             return customerList;
         }
+        public int Add(Customer customer)
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify an INSERT SQL statement
+            conn.Open();
+            //Register Member
+            cmd.CommandText = @"INSERT INTO Customer (MemberId, MName, MGender, MBirthDate, MAddress, MCountry, MTelNo, MEmailAddr, MPassword)
+            VALUES(@memberid, @mname, @mgender, @mbirthdate, @maddress, @mcountry, @mtelno, @memailaddr, @mpassword)";
+            //Define the parameters used in SQL statement, value for each parameter
+            //is retrieved from respective class's property.
+            cmd.Parameters.AddWithValue("@memberid", customer.MemberId);
+            cmd.Parameters.AddWithValue("@mname", customer.MName);
+            cmd.Parameters.AddWithValue("@mgender", customer.MGender);
+            cmd.Parameters.AddWithValue("@mbirthdate", customer.MBirthDate);
+
+            if (string.IsNullOrEmpty(customer.MAddress))
+                cmd.Parameters.AddWithValue("@maddress", DBNull.Value);
+
+            else
+                cmd.Parameters.AddWithValue("@maddress", customer.MAddress);
+
+            cmd.Parameters.AddWithValue("@mcountry", customer.MCountry);
+
+            if (string.IsNullOrEmpty(customer.MTelNo))
+                cmd.Parameters.AddWithValue("@mtelno", DBNull.Value);
+
+            else
+                cmd.Parameters.AddWithValue("@mtelno", customer.MTelNo);
+
+            if (string.IsNullOrEmpty(customer.MEmailAddr))
+                cmd.Parameters.AddWithValue("@memailaddr", DBNull.Value);
+
+            else
+                cmd.Parameters.AddWithValue("@memailaddr", customer.MEmailAddr);
+
+
+            cmd.Parameters.AddWithValue("@mpassword", customer.MPassword);
+
+
+            int addcustomer = cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+
+            return addcustomer;
+        }
+
+        public int Delete(int memberId)
+        {
+            //Instantiate a SqlCommand object, supply it with a DELETE SQL statement
+            //to delete a staff record specified by a Member ID
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"DELETE FROM Customer 
+                                WHERE MemberId = @selectMemberId";
+            cmd.Parameters.AddWithValue("@selectMemberId", memberId);
+            //Open a database connection
+            conn.Open();
+            int rowAffected = 0;
+            //Execute the DELETE SQL to remove the staff record
+            rowAffected += cmd.ExecuteNonQuery();
+            //Close database connection
+            conn.Close();
+
+
+            //Return number of row of staff record updated or deleted
+            return rowAffected;
+        }
+
     }
 
-         
+
 }

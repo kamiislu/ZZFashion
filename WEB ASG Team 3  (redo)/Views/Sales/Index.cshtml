@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.Customer>
 
 @{
-    ViewData["Title"] = "View Customer";
+    ViewData["Title"] = "Index";
 }
 
 <h4 class="PageTitle">View Customer</h4>
-<p><a asp-action="Create">Create New Customer</a></p>
 <!-- Add a partial view to display a list of staff records
  in a tabular format. -->
 <partial name="~/Views/Sales/_ViewCustomer.cshtml" model="@Model" />

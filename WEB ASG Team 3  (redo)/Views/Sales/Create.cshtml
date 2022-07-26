@@ -12,7 +12,7 @@
             <label asp-for="MemberId"
                    class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9 col-md-5">
-                <input asp-for="MemberId" class="form-control" />
+                <input asp-for="MemberId" class="form-control" placeholder="M00000001" />
                 <span asp-validation-for="MemberId"
                       class="text-danger"></span>
             </div>
@@ -96,9 +96,9 @@
         </div>
         <div class="form-group row">
             <label asp-for="MPassword"
-                   class="col-sm-3 col-form-label"></label>
+                   class="col-sm-3 col-form-label"></label> 
             <div class="col-sm-9 col-md-5">
-                <input asp-for="MPassword" class="form-control" />
+                <input asp-for="MPassword" class="form-control" readonly="readonly" value="AbC@123#" />
                 <span asp-validation-for="MPassword"
                       class="text-danger"></span>
             </div>
@@ -108,9 +108,6 @@
                 <input type="submit" value="Create"
                        class="btn btn-primary" />
             </div>
-        </div>
-        <div>
-            <a asp-action="Index">Back to List</a>
         </div>
     </fieldset>
 </form>

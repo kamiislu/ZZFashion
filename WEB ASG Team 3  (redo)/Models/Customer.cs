@@ -8,26 +8,42 @@ namespace WEB2022Apr_P02_T3.Models
 {
     public class Customer
     {
+        [Required]
         [Display(Name = "Member ID")]
+        [StringLength(9, ErrorMessage = "MemberID cannot exceed 9 characters!")]
         public string MemberId { get; set; }
+
+        [Required]
         [Display(Name = "Name")]
+        [StringLength(50, ErrorMessage = "Name cannot exceed 50 characters!")]
         public string MName { get; set; }
+
+        [Required]
         [Display(Name = "Gender")]
         public char MGender { get; set; }
+
+        [Required]
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         public DateTime? MBirthDate { get; set; }
-        [Required]
+
         [Display(Name = "Residential Address")]
         [StringLength(250, ErrorMessage = "Phone number cannot exceed 20 characters!")]
         public string MAddress { get; set; }
+
+        [Required]
+        [Display(Name = "Country")]
+        [StringLength(50, ErrorMessage = "Phone number cannot exceed 50 characters!")]
         public string MCountry { get; set; }
+
+        [Display(Name = "Phone Number")]
         [StringLength(20, ErrorMessage = "Phone number cannot exceed 20 characters!")]
         public string MTelNo { get; set; }
-        [Required]
+
         [Display(Name = "Email Address")]
         [EmailAddress] // Validation Annotation for email address format
         public string MEmailAddr { get; set; }
+
         [Required]
         [Display(Name = "Password")]
         [StringLength(20, ErrorMessage = "Password cannot exceed 20 characters!")]
