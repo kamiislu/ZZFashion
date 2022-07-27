@@ -16,6 +16,7 @@ namespace WEB2022Apr_P02_T3.Controllers
     public class SalesController : Controller
     {
         private CustomerDAL customerContext = new CustomerDAL();
+        private VoucherDAL voucherContext = new VoucherDAL();
         // GET: SalesController
         public ActionResult Index()
         {
@@ -159,6 +160,68 @@ namespace WEB2022Apr_P02_T3.Controllers
             // Delete the customner record from database
             customerContext.Delete(customer.MemberId);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult PassVoucher(string searchString)
+        {
+            if ((HttpContext.Session.GetString("Role") == null) ||
+                (HttpContext.Session.GetString("Role") != "SalesPersonnel"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
+            var searchCustomer = from c in voucherContext.GetAllCashVoucher()
+                                 select c;
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+
+                searchCustomer = searchCustomer.Where(c => c.MemberId.Contains(searchString));
+
+            }
+
+            return View(searchCustomer);
+        }
+
+        // GET: StaffController/Edit/5
+        public ActionResult Collect(int id)
+        {
+            // Stop accessing the action if not logged in
+            // or account not in the "Staff" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+            (HttpContext.Session.GetString("Role") != "SalesPersonnel"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            CashVoucher cashvoucher = voucherContext.GetDetails(id);
+            if (cashvoucher == null)
+            {
+                //Return to listing page, not allowed to edit
+                return RedirectToAction("PassVoucher");
+            }
+            return View(cashvoucher);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Collect(CashVoucher cashVoucher)
+        {
+            //in case of the need to return to Edit.cshtml view
+            if (ModelState.IsValid)
+            {
+                //Update staff record to database
+                voucherContext.Collect(cashVoucher);
+                return RedirectToAction("PassVoucher");
+            }
+            else
+            {
+                //Input validation fails, return to the view
+                //to display error message
+                return View(cashVoucher);
+            }
         }
     }
 }

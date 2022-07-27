@@ -34,6 +34,7 @@ namespace WEB2022Apr_P02_T3.Models
         [Display(Name ="Date Time Issued")]
         public DateTime DateTimeIssued { get; set; }
 
+        [Required]
         [Display(Name = "Voucher SN")]
         [StringLength(30, ErrorMessage = "Vocuher SN cannot exceed 30 characters!")]
         public string? VoucherSN { get; set; }

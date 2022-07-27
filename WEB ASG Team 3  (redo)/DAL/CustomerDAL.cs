@@ -298,6 +298,7 @@ namespace WEB2022Apr_P02_T3.DAL
         public bool IsMemberExist(string findmember, string memberId)
         {
             bool memberFound = false;
+
             //Create a SqlCommand object and specify the SQL statement 
             //to get a staff record with the email address to be validated
             SqlCommand cmd = conn.CreateCommand();
@@ -324,6 +325,7 @@ namespace WEB2022Apr_P02_T3.DAL
             conn.Close();
             return memberFound;
         }
+
     }
 
 

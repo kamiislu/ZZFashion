@@ -6,78 +6,56 @@
 
 <h1>PassVoucher</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IssuingID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MemberId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MonthIssuedFor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.YearIssuedFor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateTimeIssued)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VoucherSN)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateTimeRedeemed)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IssuingID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MemberId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MonthIssuedFor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YearIssuedFor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTimeIssued)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VoucherSN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTimeRedeemed)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+@using (Html.BeginForm("PassVoucher", "Sales", FormMethod.Get))
+{
+    <p>
+        Customer: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
 }
-    </tbody>
-</table>
+
+@if (Model.ToList().Count > 0)
+{
+    <div class="table-responsive">
+        <table id="passVoucher" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Issuing ID</th>
+                    <th>Member ID</th>
+                    <th>Amount</th>
+                    <th>Month Issued For</th>
+                    <th>Year Issued For</th>
+                    <th>Date Time Issued</th>
+                    <th>Voucher SN</th>
+                    <th>Status</th>
+                    <th>Date Time Redeemed</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.IssuingID</td>
+                        <td>@item.MemberId</td>
+                        <td>@item.Amount</td>
+                        <td>@item.MonthIssuedFor</td>
+                        <td>@item.YearIssuedFor</td>
+                        <td>@item.DateTimeIssued</td>
+                        <td>@item.VoucherSN</td>
+                        <td>@item.Status</td>
+                        <td>@item.DateTimeRedeemed</td>
+
+                        <td>
+                            <a asp-action="Collect" asp-controller="Sales"
+                               asp-route-id="@item.IssuingID">Collect</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <span style="color:red">No record found!</span>}
