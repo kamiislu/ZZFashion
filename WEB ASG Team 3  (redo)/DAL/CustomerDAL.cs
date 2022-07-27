@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 using System.Data.SqlClient;
+using System.IO;
 using WEB2022Apr_P02_T3.Models;
 
 namespace WEB2022Apr_P02_T3.DAL
@@ -265,6 +263,36 @@ namespace WEB2022Apr_P02_T3.DAL
             reader.Close();
             conn.Close();
             return emailFound;
+        }
+
+        public bool IsPhoneNumExist(string mtelno, string memberId)
+        {
+            bool telFound = false;
+            //Create a SqlCommand object and specify the SQL statement 
+            //to get a staff record with the email address to be validated
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT MemberId FROM Customer 
+                             WHERE MTelNo= @selectedTelNo";
+            cmd.Parameters.AddWithValue("@selectedTelNo", mtelno);
+            //Open a database connection and execute the SQL statement
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            { //Records found
+                while (reader.Read())
+                {
+                    if (reader.GetString(0) != memberId)
+                        //The email address is used by another staff
+                        telFound = true;
+                }
+            }
+            else
+            { //No record
+                telFound = false; // The email address given does not exist
+            }
+            reader.Close();
+            conn.Close();
+            return telFound;
         }
 
     }

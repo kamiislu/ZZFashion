@@ -38,6 +38,7 @@ namespace WEB2022Apr_P02_T3.Models
 
         [Display(Name = "Phone Number")]
         [StringLength(20, ErrorMessage = "Phone number cannot exceed 20 characters!")]
+        [ValidatePhoneNumExists]
         public string MTelNo { get; set; }
 
         [Display(Name = "Email Address")]
