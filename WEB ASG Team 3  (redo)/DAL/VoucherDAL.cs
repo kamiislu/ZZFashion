@@ -84,22 +84,26 @@ namespace WEB2022Apr_P02_T3.DAL
             SqlDataReader reader = cmd.ExecuteReader();
             //Read all records until the end, save data into a staff list
             List<CashVoucher> cashVoucherList = new List<CashVoucher>();
+            CashVoucher cashvoucher = new CashVoucher();
             while (reader.Read())
             {
-                cashVoucherList.Add(
-                new CashVoucher
-                {
-                    IssuingID = reader.GetInt32(0),
-                    MemberId = reader.GetString(1),
-                    Amount = reader.GetDecimal(2),
-                    MonthIssuedFor = reader.GetInt32(3),
-                    YearIssuedFor = reader.GetInt32(4),
-                    DateTimeIssued = reader.GetDateTime(5),
-                    VoucherSN = !reader.IsDBNull(6) ? reader.GetString(6) : string.Empty,
-                    // (char) 0 - ASCII Code 0 - null value
-                    Status = reader.GetString(7)[0],
-                    DateTimeRedeemed = !reader.IsDBNull(8) ? reader.GetDateTime(8) : (DateTime?)null,
-                }
+
+                cashVoucherList.Add(                  
+                    new CashVoucher
+                    {
+                        IssuingID = reader.GetInt32(0),
+                        MemberId = reader.GetString(1),
+                        Amount = reader.GetDecimal(2),
+                        MonthIssuedFor = reader.GetInt32(3),
+                        YearIssuedFor = reader.GetInt32(4),
+                        DateTimeIssued = reader.GetDateTime(5),
+                        VoucherSN = !reader.IsDBNull(6) ? reader.GetString(6) : string.Empty,
+                        // (char) 0 - ASCII Code 0 - null value
+                        Status = reader.GetString(7)[0],
+                        DateTimeRedeemed = !reader.IsDBNull(8) ? reader.GetDateTime(8) : (DateTime?)null,
+                   
+                    }
+                    
                 );
 
             }
@@ -115,18 +119,48 @@ namespace WEB2022Apr_P02_T3.DAL
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
             //Specify an UPDATE SQL statement
-            cmd.CommandText = @"UPDATE CashVoucher SET Status=@status,
-                        VoucherSN =@voucherSN
+
+            cmd.CommandText = @"UPDATE CashVoucher SET Status = (Status + 1),
+                        VoucherSN =@voucherSN,
                         WHERE IssuingID = @selectedIssuingID";
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
-            cmd.Parameters.AddWithValue("@status", cashvoucher.Status);
+            
+            cmd.Parameters.AddWithValue("Status", cashvoucher.Status);
             cmd.Parameters.AddWithValue("@voucherSN", cashvoucher.VoucherSN);
             cmd.Parameters.AddWithValue("@selectedIssuingID", cashvoucher.IssuingID);
+            
             //Open a database connection
             conn.Open();
-             //ExecuteNonQuery is used for UPDATE and DELETE
-            int count = 0;
+            //ExecuteNonQuery is used for UPDATE and DELETE
+            int count = cmd.ExecuteNonQuery();
+            //Close the database connection
+            conn.Close();
+            return count;
+        }
+
+        public int Redeem(CashVoucher cashvoucher)
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify an UPDATE SQL statement
+
+            cmd.CommandText = @"UPDATE CashVoucher SET Status = (Status + 1),
+                        VoucherSN =@voucherSN,
+                        DateTimeRedeemed = getdate()
+                        WHERE IssuingID = @selectedIssuingID";
+            //Define the parameters used in SQL statement, value for each parameter
+            //is retrieved from respective class's property.
+
+            cmd.Parameters.AddWithValue("Status", cashvoucher.Status);
+            cmd.Parameters.AddWithValue("@voucherSN", cashvoucher.VoucherSN);
+            cmd.Parameters.AddWithValue("DateTimeRedeemed", cashvoucher.DateTimeRedeemed);
+            cmd.Parameters.AddWithValue("@selectedIssuingID", cashvoucher.IssuingID);
+
+            //Open a database connection
+            conn.Open();
+            //ExecuteNonQuery is used for UPDATE and DELETE
+            int count = cmd.ExecuteNonQuery();
             //Close the database connection
             conn.Close();
             return count;

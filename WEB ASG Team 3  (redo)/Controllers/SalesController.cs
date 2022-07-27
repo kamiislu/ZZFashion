@@ -54,6 +54,18 @@ namespace WEB2022Apr_P02_T3.Controllers
                 Value = "China",
                 Text = "China"
             });
+            countries.Add(new SelectListItem
+            {
+                Value = "United Kingdom",
+                Text = "United Kingdom"
+            });
+            countries.Add(new SelectListItem
+            {
+                Value = "India",
+                Text = "India"
+            });
+
+
 
             return countries;
         }
@@ -202,6 +214,13 @@ namespace WEB2022Apr_P02_T3.Controllers
                 //Return to listing page, not allowed to edit
                 return RedirectToAction("PassVoucher");
             }
+
+            if (cashvoucher.Status.ToString() == "1" || cashvoucher.Status.ToString() == "2")
+            {
+                return RedirectToAction("PassVoucher");
+            }
+
+
             return View(cashvoucher);
         }
 
@@ -223,5 +242,51 @@ namespace WEB2022Apr_P02_T3.Controllers
                 return View(cashVoucher);
             }
         }
+
+        // GET: StaffController/Edit/5
+        public ActionResult Redeem(int id)
+        {
+            // Stop accessing the action if not logged in
+            // or account not in the "Staff" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+            (HttpContext.Session.GetString("Role") != "SalesPersonnel"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            CashVoucher cashvoucher = voucherContext.GetDetails(id);
+            if (cashvoucher == null)
+            {
+                //Return to listing page, not allowed to edit
+                return RedirectToAction("PassVoucher");
+            }
+
+            if (cashvoucher.Status.ToString() == "0" || cashvoucher.Status.ToString() == "2")
+            {
+                return RedirectToAction("PassVoucher");
+            }
+
+
+            return View(cashvoucher);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Redeem(CashVoucher cashVoucher)
+        {
+            //in case of the need to return to Edit.cshtml view
+            if (ModelState.IsValid)
+            {
+                //Update staff record to database
+                voucherContext.Collect(cashVoucher);
+                return RedirectToAction("PassVoucher");
+            }
+            else
+            {
+                //Input validation fails, return to the view
+                //to display error message
+                return View(cashVoucher);
+            }
+        }
+
     }
 }

@@ -1,16 +1,16 @@
 ﻿@model WEB2022Apr_P02_T3.Models.CashVoucher
 
 @{
-    ViewData["Title"] = "Collect";
+    ViewData["Title"] = "Redeem";
 }
 
-<h1>Collect</h1>
+<h1>Redeem</h1>
 
 <h4>CashVoucher</h4>
 <hr />
-<form asp-action="Collect">
+<form asp-action="Redeem">
     <fieldset class="FormContent">
-        <legend>Are you sure to collect this record?</legend>
+        <legend>Are you sure to redeem this record?</legend>
         <div class="form-group row">
             <label asp-for="IssuingID"
                    class="col-sm-3 col-form-label"></label>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label asp-for="VoucherSN" 
+            <label asp-for="VoucherSN"
                    class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9 col-md-5">
                 <input asp-for="VoucherSN"
@@ -40,11 +40,10 @@
         </div>
         <div class="form-group row">
             <div class="col-sm-9 offset-sm-3">
-                <input type="submit" value="Collect"
+                <input type="submit" value="Redeem"
                        class="btn btn-primary" />
             </div>
         </div>
 
     </fieldset>
 </form>
-

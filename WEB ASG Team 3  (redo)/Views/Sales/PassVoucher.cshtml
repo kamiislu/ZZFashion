@@ -4,13 +4,13 @@
     ViewData["Title"] = "PassVoucher";
 }
 
-<h1>PassVoucher</h1>
+<h1>Voucher</h1>
 
 @using (Html.BeginForm("PassVoucher", "Sales", FormMethod.Get))
 {
     <p>
-        Customer: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
+        Member ID : @Html.TextBox("SearchString")
+        <input type="submit" value="Search"  />
     </p>
 }
 
@@ -35,6 +35,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
+
                     <tr>
                         <td>@item.IssuingID</td>
                         <td>@item.MemberId</td>
@@ -46,12 +47,18 @@
                         <td>@item.Status</td>
                         <td>@item.DateTimeRedeemed</td>
 
+
+
                         <td>
                             <a asp-action="Collect" asp-controller="Sales"
-                               asp-route-id="@item.IssuingID">Collect</a>
+                             asp-route-id="@item.IssuingID">Collect</a> |
+
+                            <a asp-action="Redeem" asp-controller="Sales"
+                               asp-route-id="@item.IssuingID">Redeem</a>
                         </td>
                     </tr>
-                }
+                       
+                   }
             </tbody>
         </table>
     </div>
