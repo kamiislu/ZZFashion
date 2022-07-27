@@ -69,11 +69,11 @@
             <label asp-for="MCountry"
                    class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9 col-md-5">
-                <select asp-for="MCountry"
+                <select asp-for="MCountry" 
                         asp-items="@ViewData["CountryList"]
                                      as List<SelectListItem>"
                         class="form-control">
-                </select>
+                </select> 
             </div>
         </div>
         <div class="form-group row">

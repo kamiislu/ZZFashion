@@ -1,0 +1,83 @@
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.CashVoucher>
+
+@{
+    ViewData["Title"] = "PassVoucher";
+}
+
+<h1>PassVoucher</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IssuingID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonthIssuedFor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearIssuedFor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTimeIssued)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoucherSN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTimeRedeemed)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssuingID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MonthIssuedFor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearIssuedFor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTimeIssued)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoucherSN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTimeRedeemed)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

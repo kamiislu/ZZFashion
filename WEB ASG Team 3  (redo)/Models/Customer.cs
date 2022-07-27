@@ -42,6 +42,8 @@ namespace WEB2022Apr_P02_T3.Models
 
         [Display(Name = "Email Address")]
         [EmailAddress] // Validation Annotation for email address format
+                       // Custom Validation Attribute for checking email address exists
+        [ValidateEmailExists]
         public string MEmailAddr { get; set; }
 
         [Required]

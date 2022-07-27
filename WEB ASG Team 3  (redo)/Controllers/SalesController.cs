@@ -30,21 +30,6 @@ namespace WEB2022Apr_P02_T3.Controllers
         }
 
 
-
-        public ActionResult Create()
-        {
-            // Stop accessing the action if not logged in
-            // or account not in the "SalesPersonnel" role
-            if ((HttpContext.Session.GetString("Role") == null) ||
-            (HttpContext.Session.GetString("Role") != "SalesPersonnel"))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            ViewData["CountryList"] = GetCountries();
-            return View();
-        }
-
         private List<SelectListItem> GetCountries()
         {
             List<SelectListItem> countries = new List<SelectListItem>();
@@ -75,6 +60,20 @@ namespace WEB2022Apr_P02_T3.Controllers
         // GET: SalesController/Details/5
         public ActionResult Details(int id)
         {
+            return View();
+        }
+
+        public ActionResult Create()
+        {
+            // Stop accessing the action if not logged in
+            // or account not in the "SalesPersonnel" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+            (HttpContext.Session.GetString("Role") != "SalesPersonnel"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewData["CountryList"] = GetCountries();
             return View();
         }
 
