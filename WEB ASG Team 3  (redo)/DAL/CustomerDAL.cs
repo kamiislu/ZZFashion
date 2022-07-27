@@ -216,7 +216,7 @@ namespace WEB2022Apr_P02_T3.DAL
             return addcustomer;
         }
 
-        public int Delete(int memberId)
+        public int Delete(string memberId)
         {
             //Instantiate a SqlCommand object, supply it with a DELETE SQL statement
             //to delete a staff record specified by a Member ID

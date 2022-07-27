@@ -156,13 +156,10 @@ namespace WEB2022Apr_P02_T3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Customer customer)
         {
-            // Delete the staff record from database
 
-            customerContext.Delete(int.Parse(customer.MemberId));
+            // Delete the customner record from database
+            customerContext.Delete(customer.MemberId);
             return RedirectToAction("Index");
         }
     }
 }
-
-
-
