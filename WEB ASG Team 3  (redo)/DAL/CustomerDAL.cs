@@ -295,6 +295,35 @@ namespace WEB2022Apr_P02_T3.DAL
             return telFound;
         }
 
+        public bool IsMemberExist(string findmember, string memberId)
+        {
+            bool memberFound = false;
+            //Create a SqlCommand object and specify the SQL statement 
+            //to get a staff record with the email address to be validated
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT MemberId FROM Customer 
+                             WHERE MemberId= @selectedMemberId";
+            cmd.Parameters.AddWithValue("@selectedMemberId", findmember);
+            //Open a database connection and execute the SQL statement
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            { //Records found
+                while (reader.Read())
+                {
+                    if (reader.GetString(0) == memberId)
+                        //The email address is used by another staff
+                        memberFound = true;
+                }
+            }
+            else
+            { //No record
+                memberFound = false; // The email address given does not exist
+            }
+            reader.Close();
+            conn.Close();
+            return memberFound;
+        }
     }
 
 

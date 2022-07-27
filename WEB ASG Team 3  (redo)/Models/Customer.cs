@@ -11,6 +11,7 @@ namespace WEB2022Apr_P02_T3.Models
         [Required]
         [Display(Name = "Member ID")]
         [StringLength(9, ErrorMessage = "MemberID cannot exceed 9 characters!")]
+        [ValidateMemberExists]
         public string MemberId { get; set; }
 
         [Required]
