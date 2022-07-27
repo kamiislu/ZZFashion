@@ -16,31 +16,26 @@ namespace WEB2022Apr_P02_T3.Controllers
     public class CustomerController : Controller
     {
         private CustomerDAL customerContext = new CustomerDAL();
-        public ActionResult Index(string searchString, string searchName)
+        public ActionResult Index(string searchString)
         {
-            if ((HttpContext.Session.GetString("Role") == null) || 
+            if ((HttpContext.Session.GetString("Role") == null) ||
                 (HttpContext.Session.GetString("Role") != "SalesPersonnel"))
             {
                 return RedirectToAction("Index", "Home");
             }
-
 
             //List<Customer> customerList = customerContext.GetAllCustomer();
 
             var searchCustomer = from c in customerContext.GetAllCustomer()
                                  select c;
 
-            var searchByName = from n in customerContext.GetAllCustomer()
-                               orderby n.MName
-                               select n;
-
 
             if (!String.IsNullOrEmpty(searchString))
-            {
-                searchCustomer = searchCustomer.Where(c => c.MemberId.Contains(searchString));
+            {               
+                
+                searchCustomer = searchCustomer.Where(c => c.MemberId.Contains(searchString) ||  c.MName.Contains(searchString));
 
             }
-
 
 
 

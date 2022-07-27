@@ -31,7 +31,6 @@ namespace WEB2022Apr_P02_T3.Controllers
 
 
 
-
         public ActionResult Create()
         {
             // Stop accessing the action if not logged in
