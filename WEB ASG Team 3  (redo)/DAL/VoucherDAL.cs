@@ -113,32 +113,6 @@ namespace WEB2022Apr_P02_T3.DAL
             conn.Close();
             return cashVoucherList;
         }
-        // Return number of row updated
-        public int Collect(CashVoucher cashvoucher)
-        {
-            //Create a SqlCommand object from connection object
-            SqlCommand cmd = conn.CreateCommand();
-            //Specify an UPDATE SQL statement
-
-            cmd.CommandText = @"UPDATE CashVoucher SET Status = (Status + 1),
-                        VoucherSN =@voucherSN,
-                        WHERE IssuingID = @selectedIssuingID";
-            //Define the parameters used in SQL statement, value for each parameter
-            //is retrieved from respective class's property.
-            
-            cmd.Parameters.AddWithValue("Status", cashvoucher.Status);
-            cmd.Parameters.AddWithValue("@voucherSN", cashvoucher.VoucherSN);
-            cmd.Parameters.AddWithValue("@selectedIssuingID", cashvoucher.IssuingID);
-            
-            //Open a database connection
-            conn.Open();
-            //ExecuteNonQuery is used for UPDATE and DELETE
-            int count = cmd.ExecuteNonQuery();
-            //Close the database connection
-            conn.Close();
-            return count;
-        }
-
         public int Redeem(CashVoucher cashvoucher)
         {
             //Create a SqlCommand object from connection object
@@ -147,14 +121,13 @@ namespace WEB2022Apr_P02_T3.DAL
 
             cmd.CommandText = @"UPDATE CashVoucher SET Status = (Status + 1),
                         VoucherSN =@voucherSN,
-                        DateTimeRedeemed = getdate()
+                        DateTimeRedeemed =  getdate()
                         WHERE IssuingID = @selectedIssuingID";
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
 
             cmd.Parameters.AddWithValue("Status", cashvoucher.Status);
             cmd.Parameters.AddWithValue("@voucherSN", cashvoucher.VoucherSN);
-            cmd.Parameters.AddWithValue("DateTimeRedeemed", cashvoucher.DateTimeRedeemed);
             cmd.Parameters.AddWithValue("@selectedIssuingID", cashvoucher.IssuingID);
 
             //Open a database connection
@@ -165,6 +138,63 @@ namespace WEB2022Apr_P02_T3.DAL
             conn.Close();
             return count;
         }
+
+        // Return number of row updated
+        public int Collect(CashVoucher cashvoucher)
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify an UPDATE SQL statement
+
+            cmd.CommandText = @"UPDATE CashVoucher SET Status = (Status + 1),
+                        VoucherSN =@voucherSN
+                        WHERE IssuingID = @selectedIssuingID";
+            //Define the parameters used in SQL statement, value for each parameter
+            //is retrieved from respective class's property.
+            
+            cmd.Parameters.AddWithValue("Status", cashvoucher.Status);
+            cmd.Parameters.AddWithValue("@voucherSN", cashvoucher.VoucherSN);
+            cmd.Parameters.AddWithValue("@selectedIssuingID", cashvoucher.IssuingID);
+            
+            //Open a database connection
+            conn.Open();
+            //ExecuteNonQuery is used for UPDATE and DELETE
+            int count = cmd.ExecuteNonQuery();
+            //Close the database connection
+            conn.Close();
+            return count;
+        }
+
+        public bool IsVoucherExist(string voucherSN, int issuingId)
+        {
+            bool voucherFound = false;
+            //Create a SqlCommand object and specify the SQL statement 
+            //to get a staff record with the email address to be validated
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT IssuingID FROM CashVoucher 
+                             WHERE VoucherSN= @selectedVoucher";
+            cmd.Parameters.AddWithValue("@selectedVoucher", voucherSN);
+            //Open a database connection and execute the SQL statement
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            { //Records found
+                while (reader.Read())
+                {
+                    if (reader.GetInt32(0) != issuingId)
+                        //The email address is used by another staff
+                        voucherFound = true;
+                }
+            }
+            else
+            { //No record
+                voucherFound = false; // The email address given does not exist
+            }
+            reader.Close();
+            conn.Close();
+            return voucherFound;
+        }
+
     }
 }
 

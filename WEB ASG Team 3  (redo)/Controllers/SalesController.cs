@@ -269,6 +269,7 @@ namespace WEB2022Apr_P02_T3.Controllers
 
             return View(cashvoucher);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Redeem(CashVoucher cashVoucher)
@@ -277,7 +278,7 @@ namespace WEB2022Apr_P02_T3.Controllers
             if (ModelState.IsValid)
             {
                 //Update staff record to database
-                voucherContext.Collect(cashVoucher);
+                voucherContext.Redeem(cashVoucher);
                 return RedirectToAction("PassVoucher");
             }
             else

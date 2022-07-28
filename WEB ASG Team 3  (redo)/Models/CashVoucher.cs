@@ -37,7 +37,8 @@ namespace WEB2022Apr_P02_T3.Models
         [Required]
         [Display(Name = "Voucher SN")]
         [StringLength(30, ErrorMessage = "Vocuher SN cannot exceed 30 characters!")]
-        public string? VoucherSN { get; set; }
+        [ValidateVoucherExists]
+        public string VoucherSN { get; set; }
 
         [Required]
         [Display(Name ="Status")]
