@@ -1,0 +1,72 @@
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.SalesTransaction>
+
+<p>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.transactionID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.storeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.memberID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.subtotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.discountPercent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.discountAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dateCreated)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.transactionID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.storeID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.memberID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.subtotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.discountPercent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.discountAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateCreated)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

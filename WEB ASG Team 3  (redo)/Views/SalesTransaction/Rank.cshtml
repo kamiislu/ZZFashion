@@ -1,0 +1,15 @@
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.TotalAmountViewModel>
+
+@{
+    ViewData["Title"] = "Rank";
+}
+
+<h1>Rank</h1>
+
+<h4 class="PageTitle">View Responses</h4>
+<!-- Add a partial view to display a list of staff records
+in a tabular format. -->
+<partial name="~/Views/SalesTransaction/_ViewCustomerByTransaction.cshtml" model="@Model" />
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
