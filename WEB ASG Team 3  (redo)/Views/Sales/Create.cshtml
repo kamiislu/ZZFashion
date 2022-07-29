@@ -1,0 +1,114 @@
+﻿@model WEB2022Apr_P02_T3.Models.Customer
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4 class="PageTitle">Add Customer Record</h4>
+<hr />
+<form asp-action="Create">
+    <fieldset class="FormContent">
+        <div class="form-group row">
+            <label asp-for="MemberId"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MemberId" class="form-control" placeholder="M00000001" />
+                <span asp-validation-for="MemberId"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MName"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MName" class="form-control" />
+                <span asp-validation-for="MName"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MGender"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <div class="form-group form-check-inline">
+                    <label class="col-form-label">
+                        <input asp-for="MGender" type="radio" value="M"
+                               checked class="form-check-input" />
+                        <span style="font-weight:normal;
+                                    padding-right:20px">Male</span>
+                    </label>
+                    <label class="col-form-label">
+                        <input asp-for="MGender" type="radio" value="F"
+                               class="form-check-input" />
+                        <span style="font-weight:normal;
+                                     padding-right:20px">Female</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MBirthDate"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MBirthDate" class="form-control" />
+                <span asp-validation-for="MBirthDate"
+                      class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="MAddress"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MAddress" class="form-control" />
+                <span asp-validation-for="MAddress"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MCountry"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <select asp-for="MCountry" 
+                        asp-items="@ViewData["CountryList"]
+                                     as List<SelectListItem>"
+                        class="form-control">
+                </select> 
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MTelNo"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MTelNo" class="form-control" />
+                <span asp-validation-for="MTelNo"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MEmailAddr"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MEmailAddr" class="form-control" />
+                <span asp-validation-for="MEmailAddr"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MPassword"
+                   class="col-sm-3 col-form-label"></label> 
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MPassword" class="form-control" readonly="readonly" value="AbC@123#" />
+                <span asp-validation-for="MPassword"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-9 offset-sm-3">
+                <input type="submit" value="Create"
+                       class="btn btn-primary" />
+            </div>
+        </div>
+    </fieldset>
+</form>
+

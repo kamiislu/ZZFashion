@@ -6,7 +6,8 @@
 <h4 class="PageTitle">Update Product</h4>
 
 <hr />
-<form asp-action="Update">
+<a asp-action="Index">Back to List</a>
+<form asp-action="Update" enctype="multipart/form-data">
     <fieldset class="FormContent">
         <div class="form-group row">
             <label asp-for="ProductId"
@@ -28,13 +29,21 @@
             <label asp-for="ProductImage"
                    class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9 col-md-5">
+                <input asp-for="ProductImage" value="@Model.ProductImage" hidden readonly />
                 <img src="~/Images/@Model.ProductImage" style="width:40%;background-color:white" alt="Alternate Text" />
-                <input type="file" style="margin-top:2%" asp-for="ProductImage" />
-                <input asp-for="ProductImage" class="form-control" />
-                <span asp-validation-for="ProductImage"
-                      class="text-danger"></span>
             </div>
         </div>
+        <div class="form-group row">
+            <label asp-for="fileToUpload"
+                   class="col-sm-3 col-form-label">
+                New Photo (jpg format)
+            </label>
+            <div class="col-sm-9">
+                <input asp-for="fileToUpload" accept="image/jpeg" />
+            </div>
+        </div>
+
+
         <div class="form-group row">
             <label asp-for="Price"
                    class="col-sm-3 col-form-label"></label>
@@ -53,24 +62,63 @@
                        class="form-control-plaintext" />
             </div>
         </div>
+
         <div class="form-group row">
-            <label asp-for="Obsolete"
-                   class="col-sm-3 col-form-label"></label>
-            <div class="col-sm-9 col-md-5">
-                <input asp-for="Obsolete" class="form-control" />
-                <input type="checkbox" name="Obsolete" value="" /><label>Update as obsolete</label>
-                <span asp-validation-for="Obsolete"
-                      class="text-danger"></span>
-            </div>
+            @if (Model.EffectiveDate.Year == DateTime.Now.Year)
+            {
+            <input asp-for="Obsolete" readonly hidden
+                   class="form-control-plaintext" />
+            }
+            else if ((Model.EffectiveDate.Year != DateTime.Now.Year && Model.Obsolete == "1" || Model.Obsolete == "1"))
+            {
+
+                <label asp-for="Obsolete"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="isActive" class="form-control" />
+                    <span asp-validation-for="Obsolete"
+                          class="text-danger"></span>
+                </div>
+            }
+            else if (Model.EffectiveDate.Year != DateTime.Now.Year && Model.Obsolete == "0")
+            {
+
+                <label asp-for="Obsolete"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="isActive" class="form-control" />
+                    <span asp-validation-for="Obsolete"
+                          class="text-danger"></span>
+                </div>
+            }
+
+            else
+            {
+
+            }
         </div>
+
+
+        <!-- <div class="form-group row">
+
+             <label asp-for="Obsolete"
+                    class="col-sm-3 col-form-label"></label>
+         <div class="col-sm-9 col-md-5">
+             <input asp-for="isActive" class="form-control" />
+             <span asp-validation-for="Obsolete"
+                   class="text-danger"></span>
+         </div>
+     </div>-->
+
+
         <div class="form-group row">
             <div class="col-sm-9 offset-sm-3">
                 <input type="submit" value="Save"
-                       class="btn btn-primary" />
+                       style="margin-left:10%; margin-top:10%; margin-bottom:10%; padding:5px 35px;color:black;background-color:white" />
             </div>
         </div>
         <div>
-            <a asp-action="Index">Back to List</a>
+
 
         </div>
     </fieldset>

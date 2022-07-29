@@ -1,4 +1,7 @@
-﻿@{
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.Product>
+
+
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -22,34 +25,43 @@ initial-scale = 1" />
                 <img id="imgZZLogo" src="~/images/zzlogo.png" style="width:15%" />
             </div>
             <!-- Flexbox for staff login -->
-            <div>
+
+            <div style="background-color:lightgray">
                 <form method="post" action="~/Home/StaffLogin">
                     <fieldset class="loginFieldset">
-                        <legend>Staff Login</legend>
-                        <label for="txtLoginID">Login ID:</label>
+                        <legend style="font-size:25px">ZZFashion Staff Login</legend>
+                        <label for="txtLoginID" style="font-size:20px">Login ID:</label>
                         <input type="text" name="txtLoginID"
-                               id="txtLoginID" required style="margin:1%"/><br />
-                        <label for="txtPassword">Password:</label>
+                               id="txtLoginID" required style="margin:1%;font-size:20px;border:solid" /><br />
+                        <label for="txtPassword" style="font-size:20px">Password:</label>
                         <input type="password" name="txtPassword"
-                               id="txtPassword" style="width:100px;margin:1%"
+                               id="txtPassword" style="margin:1%;font-size:20px;border:solid"
                                required />
+                        <br />
                         <input type="submit" id="btnStaffLogin"
-                               class="btn btn-primary" value="Login" />
-                        <br /> 
+                               value="Login" style="margin-left: 8%; margin-top: 10px; margin-bottom: 10px; padding: 5px 35px; color: black; background-color: white " />
+                        <br />
                         <span style="color:red;">@TempData["Message"]</span>
                     </fieldset>
                 </form>
             </div>
-            </div>
+            </divstyle="background-color:lightgray">
         </div>
         <div>
             <div style="text-align: center;">
                 <p>
                     <img id="imgLogo" src="~/images/models.png"
                          style="width: 60%" />
+                    <div style="font-size:40px">NEW PRODUCTS</div>
+                    <div style="font-size:20px; text-align: center">____________________
+                    <partial name="~/Views/Product/_NewProduct.cshtml" model="@Model" />
+                    </div>
                 </p>
             </div>
         </div>
+
     </div>
 </body>
+
+
 </html>

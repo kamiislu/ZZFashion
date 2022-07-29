@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace WEB2022Apr_P02_T3.Controllers
 {
+
     public class HomeController : Controller
     {
         private CustomerDAL customerContext = new CustomerDAL();
+        private ProductDAL productContext = new ProductDAL();
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -23,7 +25,8 @@ namespace WEB2022Apr_P02_T3.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<Product> newProductList = productContext.GetNewProduct();
+            return View(newProductList);
         }
 
         [HttpPost]
@@ -60,6 +63,27 @@ namespace WEB2022Apr_P02_T3.Controllers
                 // Redirect user to the "StaffMain" view through an action
                 return RedirectToAction("SalesMain");
             }
+
+            else if (loginID == "SG-Jurong" && password == "passSales")
+            {
+                // Store Login ID in session with the key “LoginID”
+                HttpContext.Session.SetString("LoginID", loginID);
+                HttpContext.Session.SetString("Role", "SalesPersonnel");
+
+                // Redirect user to the "StaffMain" view through an action
+                return RedirectToAction("SalesMain");
+            }
+
+            else if (loginID == "SG-Bishan" && password == "passSales")
+            {
+                // Store Login ID in session with the key “LoginID”
+                HttpContext.Session.SetString("LoginID", loginID);
+                HttpContext.Session.SetString("Role", "SalesPersonnel");
+
+                // Redirect user to the "StaffMain" view through an action
+                return RedirectToAction("SalesMain");
+            }
+
             else if (customerContext.ValidatePassword(loginID, password))
             {
                 // Store Login ID in session with the key “LoginID”

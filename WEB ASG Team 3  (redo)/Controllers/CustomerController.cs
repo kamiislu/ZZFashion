@@ -9,25 +9,45 @@ using WEB2022Apr_P02_T3.DAL;
 using WEB2022Apr_P02_T3.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WEB2022Apr_P02_T3.Controllers
 {
     public class CustomerController : Controller
     {
         private CustomerDAL customerContext = new CustomerDAL();
-        public IActionResult Index()
+        public ActionResult Index(string searchString)
         {
             if ((HttpContext.Session.GetString("Role") == null) ||
-            (HttpContext.Session.GetString("Role") != "Customer"))
+                (HttpContext.Session.GetString("Role") != "SalesPersonnel"))
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View();
+
+            //List<Customer> customerList = customerContext.GetAllCustomer();
+
+            var searchCustomer = from c in customerContext.GetAllCustomer()
+                                 select c;
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {               
+                
+                searchCustomer = searchCustomer.Where(c => c.MemberId.Contains(searchString) ||  c.MName.Contains(searchString));
+
+            }
+
+
+
+            return View(searchCustomer);
         }
+
+
+
         public ActionResult Login()
-        {
-            return View();
-        }
+            {
+                return View();
+            }
         public ActionResult ChangePassword()
         {
             string id = HttpContext.Session.GetString("LoginID");
@@ -93,6 +113,7 @@ namespace WEB2022Apr_P02_T3.Controllers
    
             return View();
         }
+
 
     }
 }

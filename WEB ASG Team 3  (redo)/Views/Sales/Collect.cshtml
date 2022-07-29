@@ -1,0 +1,50 @@
+﻿@model WEB2022Apr_P02_T3.Models.CashVoucher
+
+@{
+    ViewData["Title"] = "Collect";
+}
+
+<h1>Collect</h1>
+
+<h4>CashVoucher</h4>
+<hr />
+<form asp-action="Collect">
+    <fieldset class="FormContent">
+        <legend>Are you sure to collect this record?</legend>
+        <div class="form-group row">
+            <label asp-for="IssuingID"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="IssuingID" readonly
+                       class="form-control-plaintext" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MemberId"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MemberId" readonly
+                       class="form-control-plaintext" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="VoucherSN" 
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="VoucherSN"
+                       class="form-control" placeholder="yyyy-mm-000001" />
+                <span asp-validation-for="VoucherSN"
+                      class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-9 offset-sm-3">
+                <input type="submit" value="Collect"
+                       class="btn btn-primary" />
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+
