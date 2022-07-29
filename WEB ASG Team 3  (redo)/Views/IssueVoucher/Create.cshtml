@@ -1,16 +1,16 @@
 ﻿@model WEB2022Apr_P02_T3.Models.IssueVoucher
 
 @{
-    ViewData["Title"] = "Issue Voucher";
+    ViewData["Title"] = "Create";
 }
 
-<h1>IssueVoucher</h1>
+<h1>Create</h1>
 
 <h4>IssueVoucher</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="_IssueVoucher">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="MemberID" class="control-label"></label>
@@ -19,17 +19,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
+                <input asp-for="Amount" readonly class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MonthIssuedFor" class="control-label"></label>
-                <input asp-for="MonthIssuedFor" class="form-control" />
+                <input asp-for="MonthIssuedFor" readonly class="form-control" />
                 <span asp-validation-for="MonthIssuedFor" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="YearIssuedFor" class="control-label"></label>
-                <input asp-for="YearIssuedFor" class="form-control" />
+                <input asp-for="YearIssuedFor" readonly class="form-control" />
                 <span asp-validation-for="YearIssuedFor" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -45,6 +45,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="SalesTransaction" asp-action="Rank">Back to List</a>
 </div>
 

@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.TotalAmountViewModel>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -32,7 +30,7 @@
             </td>
             <td>
                 <a asp-action="Create" asp-controller="IssueVoucher"
-                   asp-route-id="@item">Issue Voucher</a>
+                   asp-route-id="@item.MemberID" asp-route-amt="@item.TotalAmount" asp-route-date="@item.DateCreated" >Issue Voucher</a>
             </td>
         </tr>
 }

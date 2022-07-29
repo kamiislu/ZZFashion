@@ -25,7 +25,7 @@ namespace WEB2022Apr_P02_T3.Controllers
         }
 
         // GET: IssueVoucher/Create
-        public ActionResult Create(TotalAmountViewModel totalAmtVM)
+        public ActionResult Create(string id, decimal amt, DateTime date)
         {
             if ((HttpContext.Session.GetString("Role") == null) ||
                 (HttpContext.Session.GetString("Role") != "Marketing"))
@@ -33,23 +33,23 @@ namespace WEB2022Apr_P02_T3.Controllers
                 return RedirectToAction("Index", "Home");
             }
             IssueVoucher voucher = new IssueVoucher();
-            voucher.MemberID = totalAmtVM.MemberID;
-            voucher.MonthIssuedFor = totalAmtVM.DateCreated.Month;
-            voucher.YearIssuedFor = totalAmtVM.DateCreated.Year;
+            voucher.MemberID = id;
+            voucher.MonthIssuedFor = date.Month;
+            voucher.YearIssuedFor = date.Year;
             voucher.DateTimeIssued = DateTime.Now;
-            if ((200 <= totalAmtVM.TotalAmount) && (totalAmtVM.TotalAmount < 500))
+            if ((200 <= amt) && (amt < 500))
             {
                 voucher.Amount = 20;
             }
-            else if ((500 <= totalAmtVM.TotalAmount) && (totalAmtVM.TotalAmount < 1000))
+            else if ((500 <= amt) && (amt < 1000))
             {
                 voucher.Amount = 40;
             }
-            else if ((1000 <= totalAmtVM.TotalAmount) && (totalAmtVM.TotalAmount < 1500))
+            else if ((1000 <= amt) && (amt < 1500))
             {
                 voucher.Amount = 80;
             }
-            else if (totalAmtVM.TotalAmount >= 1500)
+            else if (amt >= 1500)
             {
                 voucher.Amount = 160;
             }
@@ -62,22 +62,17 @@ namespace WEB2022Apr_P02_T3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(IssueVoucher voucher)
         {
-            try
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    voucher.IssuingID = issuevouchercontext.Create(voucher);
-                    return RedirectToAction("MarketingMain", "Home");
-                }
-                else
-                {
-                    return View(voucher);
-                }
+                voucher.IssuingID = issuevouchercontext.Create(voucher);
+                return RedirectToAction("Rank", "SalesTransaction");
             }
-            catch
+            else
             {
-                return View();
+                return View(voucher);
             }
+
         }
 
         // GET: IssueVoucher/Edit/5
