@@ -45,16 +45,27 @@ namespace WEB2022Apr_P02_T3.Controllers
         }
 
         // POST: Response/Create
-        [HttpPost]
+        [HttpPost]  
         [ValidateAntiForgeryToken]
         public ActionResult Create(Response response)
         {
-            if (ModelState.IsValid)
+            List<Response> responseList = responseContext.GetAllResponse();
+            if (ModelState.IsValid && !String.IsNullOrEmpty(response.Text))
             {
-                //Add staff record to database
-                response.DatePosted = DateTime.Now;
-                response.ResponseID = responseContext.Create(response);
-                //Redirect user to Staff/Index view
+                foreach (Response r in responseList)
+                {
+                    if (r.Text != response.Text)
+                    {
+                        //Add staff record to database
+                        response.DatePosted = DateTime.Now;
+                        response.ResponseID = responseContext.Create(response);
+                        break;
+                    }
+                    else
+                    {
+                        return View(response);
+                    }
+                }
                 return RedirectToAction("Index");
             }
             else

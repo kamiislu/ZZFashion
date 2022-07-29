@@ -1,0 +1,60 @@
+﻿@model WEB2022Apr_P02_T3.Models.CustomerViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h4 class="PageTitle">View Transactions</h4>
+<div>
+    <a asp-action="Rank" asp-controller="SalesTransaction">Customers ranked by total transaction amount last month</a>
+</div>
+<!-- Display a list of customers -->
+<div class="table-responsive">
+    <table id="viewBranch" class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.customerList)
+            {
+                string selectedRow = "";
+                if (ViewData["selectedCustomer"].ToString()
+                == item.MemberId.ToString())
+                {
+                    // Highlight the selected row
+                    selectedRow = "class='table-primary'";
+                }
+                <tr @Html.Raw(selectedRow)>
+                    <td>@item.MemberId.ToString()</td>
+                    <td>@item.MName</td>
+                    <td>@item.MGender</td>
+                    <td>
+                        <a asp-action="Index" asp-controller="SalesTransaction" asp-route-id="@item.MemberId">View Transactions</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- Display a list of transactions for each customer -->
+@if (ViewData["selectedCustomer"].ToString() != "")
+{
+    if (Model.salesTransactionList.Count != 0)
+    {
+        <h5>
+            Transactions by customer
+            @ViewData["selectedCustomer"].ToString() :
+        </h5>
+        <partial name="~/Views/SalesTransaction/_ViewTransaction.cshtml"
+                 model="@Model.salesTransactionList" />
+    }
+    else
+    {
+        <h5>No staff for selected branch!</h5>
+    }
+}

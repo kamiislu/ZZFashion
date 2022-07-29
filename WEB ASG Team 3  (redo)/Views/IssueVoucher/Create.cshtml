@@ -1,0 +1,50 @@
+﻿@model WEB2022Apr_P02_T3.Models.IssueVoucher
+
+@{
+    ViewData["Title"] = "Issue Voucher";
+}
+
+<h1>IssueVoucher</h1>
+
+<h4>IssueVoucher</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="_IssueVoucher">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MemberID" class="control-label"></label>
+                <input asp-for="MemberID" readonly class="form-control" />
+                <span asp-validation-for="MemberID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MonthIssuedFor" class="control-label"></label>
+                <input asp-for="MonthIssuedFor" class="form-control" />
+                <span asp-validation-for="MonthIssuedFor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YearIssuedFor" class="control-label"></label>
+                <input asp-for="YearIssuedFor" class="form-control" />
+                <span asp-validation-for="YearIssuedFor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTimeIssued" class="control-label"></label>
+                <input asp-for="DateTimeIssued" class="form-control" />
+                <span asp-validation-for="DateTimeIssued" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
