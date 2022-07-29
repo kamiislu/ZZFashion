@@ -27,11 +27,11 @@
         </div>
         <div class="col-md-4">
 
-            <input type="text" class="form-control" placeholder="Enter Product Title" asp-for="ProductTitle" value="" />
+            <input type="text" class="form-control" placeholder="Enter Product Title" asp-for="ProductTitle" required />
             <span asp-validation-for="ProductTitle" class="text-danger"></span>
-            <input type="text" class="form-control" style="margin:5% 0%" placeholder="Enter Price ($20 - $500)" asp-for="Price" value="" />
+            <input type="text" class="form-control" style="margin:5% 0%" placeholder="Enter Price ($20 - $500)" asp-for="Price" required/>
             <span asp-validation-for="Price" class="text-danger"></span>
-            <input type="date" class="form-control" placeholder="Enter effective Date" asp-for="EffectiveDate" value="" />
+            <input type="date" class="form-control" placeholder="Enter effective Date" asp-for="EffectiveDate" required/>
             <span asp-validation-for="EffectiveDate" class="text-danger"></span>
             <input type="hidden" class="form-control" style="margin:5% 0%" placeholder="Obsolete" asp-for="Obsolete" value="1" />
             <span asp-validation-for="Obsolete" class="text-danger"></span>

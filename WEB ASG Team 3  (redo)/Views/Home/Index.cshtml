@@ -1,4 +1,7 @@
-﻿@{
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.Product>
+
+
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -49,10 +52,16 @@ initial-scale = 1" />
                 <p>
                     <img id="imgLogo" src="~/images/models.png"
                          style="width: 60%" />
+                    <div style="font-size:40px">NEW PRODUCTS</div>
+                    <div style="font-size:20px; text-align: center">____________________
+                    <partial name="~/Views/Product/_NewProduct.cshtml" model="@Model" />
+                    </div>
                 </p>
             </div>
         </div>
 
     </div>
 </body>
+
+
 </html>

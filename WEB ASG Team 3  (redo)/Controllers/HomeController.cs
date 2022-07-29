@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace WEB2022Apr_P02_T3.Controllers
 {
+
     public class HomeController : Controller
     {
         private CustomerDAL customerContext = new CustomerDAL();
+        private ProductDAL productContext = new ProductDAL();
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -23,7 +25,8 @@ namespace WEB2022Apr_P02_T3.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<Product> newProductList = productContext.GetNewProduct();
+            return View(newProductList);
         }
 
         [HttpPost]

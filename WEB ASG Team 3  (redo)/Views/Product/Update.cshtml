@@ -64,14 +64,52 @@
         </div>
 
         <div class="form-group row">
-            <label asp-for="Obsolete"
-                   class="col-sm-3 col-form-label"></label>
-            <div class="col-sm-9 col-md-5">
-                <input asp-for="isActive" class="form-control" />
-                <span asp-validation-for="Obsolete"
-                      class="text-danger"></span>
-            </div>
+            @if (Model.EffectiveDate.Year == DateTime.Now.Year)
+            {
+            <input asp-for="Obsolete" readonly hidden
+                   class="form-control-plaintext" />
+            }
+            else if ((Model.EffectiveDate.Year != DateTime.Now.Year && Model.Obsolete == "1" || Model.Obsolete == "1"))
+            {
+
+                <label asp-for="Obsolete"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="isActive" class="form-control" />
+                    <span asp-validation-for="Obsolete"
+                          class="text-danger"></span>
+                </div>
+            }
+            else if (Model.EffectiveDate.Year != DateTime.Now.Year && Model.Obsolete == "0")
+            {
+
+                <label asp-for="Obsolete"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="isActive" class="form-control" />
+                    <span asp-validation-for="Obsolete"
+                          class="text-danger"></span>
+                </div>
+            }
+
+            else
+            {
+
+            }
         </div>
+
+
+        <!-- <div class="form-group row">
+
+             <label asp-for="Obsolete"
+                    class="col-sm-3 col-form-label"></label>
+         <div class="col-sm-9 col-md-5">
+             <input asp-for="isActive" class="form-control" />
+             <span asp-validation-for="Obsolete"
+                   class="text-danger"></span>
+         </div>
+     </div>-->
+
 
         <div class="form-group row">
             <div class="col-sm-9 offset-sm-3">

@@ -11,21 +11,23 @@
                     <th>Title</th>
                     <th>Image</th>
                     <th>Price</th>
-                    <th></th>
+                    <th>Date released</th>
+
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.ProductTitle</td>
-                        <td>
-                            @{ string imageFileName = item.ProductImage; }
-                            <img src="~/images/@imageFileName"
-                                 style="width:50px" />
-                        </td>
-                        <td>@item.Price</td>
-                    </tr>
+                <tr>
+                    <td>@item.ProductTitle</td>
+                    <td>
+                        @{ string imageFileName = item.ProductImage; }
+                        <img src="~/images/@imageFileName"
+                             style="width:90px" />
+                    </td>
+                    <td>@item.Price</td>
+                    <td>@item.EffectiveDate</td>
+                </tr>
                 }
             </tbody>
         </table>

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.Product>
+
+    @{
+        ViewData["Title"] = "View New Product";
+    }
+
+    <h4 class="PageTitle">New Products</h4>
+
+
+    <!-- Add a partial view to display a list of staff records
+     in a tabular format. -->
+    <partial name="~/Views/Product/_NewProduct.cshtml" model="@Model" />
