@@ -23,9 +23,9 @@
                     <td>
                         @{ string imageFileName = item.ProductImage; }
                         <img src="~/images/@imageFileName"
-                             style="width:90px" />
+                             style="width:100px" />
                     </td>
-                    <td>@item.Price</td>
+                    <td>$@item.Price.ToString("0.00")</td>
                     <td>@item.EffectiveDate</td>
                 </tr>
                 }
