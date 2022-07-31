@@ -46,11 +46,16 @@ namespace WEB2022Apr_P02_T3.Controllers
                     {
                         // Store Login ID in session with the key “LoginID”
                         HttpContext.Session.SetString("LoginID", loginID);
-                        HttpContext.Session.SetString("Role", "Marketing");
+                        HttpContext.Session.SetString("Role", loginID);
                         if (s.StaffID == "SG-Bishan" || s.StaffID == "SG-Jurong" ||  s.StaffID == "SG-Orchard")
                         {
-                            s.StaffID = "Sales";
-                            return RedirectToAction(s.StaffID.ToString() + "Main");
+                            HttpContext.Session.SetString("Role", "SalesPersonnel");
+                            return RedirectToAction("SalesMain");
+                        }
+                        else if (s.StaffID == "ProductManager")
+                        {
+                            HttpContext.Session.SetString("Role", "ProductManager");
+                            return RedirectToAction("ProductMain");
                         }
                         else
                         {
