@@ -21,9 +21,11 @@ namespace WEB2022Apr_P02_T3.Models
         public string? StaffID { get; set; }
 
         [Display (Name = "Date & Time Posted")]
+        [DataType(DataType.Date)]
         public DateTime DatePosted { get; set; }
         
         [Display (Name = "Text")]
+        [Required]
         public string Text { get; set; }
     }
 }

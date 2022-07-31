@@ -23,6 +23,7 @@ namespace WEB2022Apr_P02_T3.Models
         public string Title { get; set; }
 
         [Display(Name ="Text")]
+        [Required]
         public string? Text { get; set; }
 
         public string? Image { get; set; }
