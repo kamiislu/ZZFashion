@@ -1,0 +1,87 @@
+﻿@model WEB2022Apr_P02_T3.Models.Customer
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<h1>Edit Profile</h1>
+
+<hr />
+<form asp-action="Edit">
+    <fieldset class="FormContent">
+        <div class="form-group row">
+            <label asp-for="MemberId"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MemberId" readonly
+                       class="form-control-plaintext" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MName"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MName" readonly
+                       class="form-control-plaintext" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MGender"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MGender" readonly
+                       class="form-control-plaintext" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MCountry"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MCountry" readonly
+                       class="form-control-plaintext" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MPassword"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <a class="btn btn-primary" href="ChangePassword">Change Password</a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MTelNo"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MTelNo" class="form-control" name="txtTelNo" />
+                <span asp-validation-for="MTelNo"
+                      class="text-danger"></span>
+                <span style="color:red;">@TempData["validatePhoneNum"]</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MEmailAddr"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MEmailAddr" class="form-control" name="txtEmailAddr" />
+                <span asp-validation-for="MEmailAddr"
+                      class="text-danger"></span>
+                <span style="color:red;">@TempData["validateEmail"]</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MAddress"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="MAddress" class="form-control" name="txtAddress"/>
+                <span asp-validation-for="MAddress"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-9 offset-sm-3">
+                <input type="submit" value="Save"
+                       class="btn btn-primary" />
+            </div>
+        </div>
+    </fieldset>
+</form>

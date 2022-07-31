@@ -128,7 +128,49 @@ namespace WEB2022Apr_P02_T3.DAL
             conn.Close();
             return count;
         }
-
+        public int Update(string phoneNo, string address, string emailAddr, string id)
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify an UPDATE SQL statement
+            cmd.CommandText = @"UPDATE Customer SET MTelNo=@phoneNo,
+                                MAddress=@address, MEmailAddr = @emailAddr
+                                WHERE MemberId = @customerID";
+            //Define the parameters used in SQL statement, value for each parameter
+            //is retrieved from respective class's property.
+            if (string.IsNullOrEmpty(phoneNo))
+            {
+                cmd.Parameters.AddWithValue("@phoneNo", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@phoneNo", phoneNo);
+            }
+            if (string.IsNullOrEmpty(address))
+            {
+                cmd.Parameters.AddWithValue("@address", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@address", address);
+            }
+            if (string.IsNullOrEmpty(emailAddr))
+            {
+                cmd.Parameters.AddWithValue("@emailAddr", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@emailAddr", emailAddr);
+            }
+            cmd.Parameters.AddWithValue("@customerID", id);
+            //Open a database connection
+            conn.Open();
+            //ExecuteNonQuery is used for UPDATE and DELETE
+            int count = cmd.ExecuteNonQuery();
+            //Close the database connection
+            conn.Close();
+            return count;
+        }
         public List<Customer> GetAllCustomer()
         {
             //Create a SqlCommand object from connection object

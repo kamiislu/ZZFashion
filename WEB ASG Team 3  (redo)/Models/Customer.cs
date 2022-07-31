@@ -29,12 +29,11 @@ namespace WEB2022Apr_P02_T3.Models
         public DateTime? MBirthDate { get; set; }
 
         [Display(Name = "Residential Address")]
-        [StringLength(250, ErrorMessage = "Phone number cannot exceed 20 characters!")]
+        [StringLength(250, ErrorMessage = "Residential Address cannot exceed 20 characters!")]
         public string MAddress { get; set; }
 
         [Required]
         [Display(Name = "Country")]
-        [StringLength(50, ErrorMessage = "Phone number cannot exceed 50 characters!")]
         public string MCountry { get; set; }
 
         [Display(Name = "Phone Number")]

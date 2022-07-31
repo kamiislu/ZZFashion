@@ -19,7 +19,8 @@ namespace WEB2022Apr_P02_T3.Controllers
         public ActionResult Index(string searchString)
         {
             if ((HttpContext.Session.GetString("Role") == null) ||
-                (HttpContext.Session.GetString("Role") != "SalesPersonnel"))
+                (HttpContext.Session.GetString("Role") != "SalesPersonnel") ||
+                (HttpContext.Session.GetString("Role") != "Customer"))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -29,15 +30,12 @@ namespace WEB2022Apr_P02_T3.Controllers
             var searchCustomer = from c in customerContext.GetAllCustomer()
                                  select c;
 
-
             if (!String.IsNullOrEmpty(searchString))
             {               
                 
                 searchCustomer = searchCustomer.Where(c => c.MemberId.Contains(searchString) ||  c.MName.Contains(searchString));
 
             }
-
-
 
             return View(searchCustomer);
         }
@@ -46,8 +44,71 @@ namespace WEB2022Apr_P02_T3.Controllers
 
         public ActionResult Login()
             {
-                return View();
+            return View();
             }
+        public ActionResult CustomerMain()
+        {
+            string id = HttpContext.Session.GetString("LoginID");
+            Customer cust = customerContext.GetDetails(id);
+            TempData["CustomerName"] = cust.MName;
+            return View(cust);
+        }
+        public ActionResult Edit()
+        {
+            string id = HttpContext.Session.GetString("LoginID");// Stop accessing the action if not logged in
+            // or account not in the "Staff" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+            (HttpContext.Session.GetString("Role") != "Customer"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (id == null)
+            { //Query string parameter not provided
+              //Return to listing page, not allowed to edit
+                return RedirectToAction("Index");
+            }
+            Customer cust = customerContext.GetDetails(id);
+            if (cust == null)
+            {
+                //Return to listing page, not allowed to edit
+                return RedirectToAction("Index");
+            }
+            return View(cust);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(IFormCollection formData)
+        {
+            string id = HttpContext.Session.GetString("LoginID");
+            string telNo = formData["txtTelNo"].ToString();
+            string emailAddr = formData["txtEmailAddr"].ToString();
+            string address = formData["txtAddress"].ToString();    
+            if (customerContext.IsEmailExist(emailAddr, id) == true && customerContext.IsPhoneNumExist(telNo, id) == true)
+            {
+                TempData["validateEmail"] = "Email address already exists!";
+                TempData["validatePhoneNum"] = "Phone number already exists!";
+            }
+            else if (customerContext.IsEmailExist(emailAddr, id) == true)
+            {
+                //Input validation fails, return to the Create view
+                //to display error message
+                TempData["validateEmail"] = "Email address already exists!";
+            }
+            else if (customerContext.IsPhoneNumExist(telNo, id) == true)
+            {
+                //Input validation fails, return to the Create view
+                //to display error message
+                TempData["validatePhoneNum"] = "Phone number already exists!";
+            }
+            else
+            {
+                //Add staff record to database
+                customerContext.Update(telNo, address, emailAddr, id);
+                //Redirect user to Staff/Index view
+            }
+            Customer cust = customerContext.GetDetails(id);
+            return View(cust);
+        }
         public ActionResult ChangePassword()
         {
             string id = HttpContext.Session.GetString("LoginID");
@@ -113,6 +174,7 @@ namespace WEB2022Apr_P02_T3.Controllers
    
             return View();
         }
+        
 
 
     }
