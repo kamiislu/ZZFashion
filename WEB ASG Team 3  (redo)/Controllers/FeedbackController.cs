@@ -34,20 +34,40 @@ namespace WEB2022Apr_P02_T3.Controllers
         // GET: FeedbackController/Create
         public ActionResult Create()
         {
+            string id = HttpContext.Session.GetString("LoginID");// Stop accessing the action if not logged in
+            // or account not in the "Staff" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+            (HttpContext.Session.GetString("Role") != "Customer"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         // POST: FeedbackController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Feedback feedback, IFormCollection formData)
         {
-            try
+            string title = formData["txtTitle"].ToString();
+            string text = formData["txtFeedback"].ToString();
+            string image = formData["txtImage"].ToString();
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                string id = HttpContext.Session.GetString("LoginID");
+                feedback.MemberID = id;
+                feedback.Title = title;
+                feedback.Text = text;
+                feedback.Image = image;
+                //Add staff record to database
+                feedback.FeedbackID = feedbackContext.Create(feedback);
+                //Redirect user to Staff/Index view
+                return RedirectToAction("CustomerMain", "Customer");
             }
-            catch
+            else
             {
+                //Input validation fails, return to the Create view
+                //to display error message
                 return View();
             }
         }

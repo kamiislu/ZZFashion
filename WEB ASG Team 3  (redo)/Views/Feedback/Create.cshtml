@@ -1,0 +1,55 @@
+﻿@model WEB2022Apr_P02_T3.Models.Feedback
+
+@{
+    ViewData["Title"] = "Create Feedback";
+}
+
+<h1>Feedback Form</h1>
+<p>
+    @{
+
+        DateTime todayDate = DateTime.Now;
+    }
+    Today's date:  @todayDate.ToString("dddd, dd-MMMM-y HH:mm tt") &nbsp;
+</p>
+
+<hr />
+<form asp-action="Create">
+    <fieldset class="FormContent">
+        <div class="form-group row">
+            <label asp-for="Title"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="Title" class="form-control" name="txtTitle"/>
+                <span asp-validation-for="Title"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Text"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-4">
+                <input asp-for="Text" class="form-control" name="txtFeedback" />
+                <span asp-validation-for="Text"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Image"
+                   class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9 col-md-5">
+                <img src="/Images/NoImage.png" style="width:40%;background-color:white" alt="Alternate Text" />
+                <input type="file" asp-for="Image" value="" name="txtImage" />
+                <span asp-validation-for="Image"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-9 offset-sm-3">
+                <input type="submit" value="Submit"
+                       class="btn btn-primary" />
+            </div>
+        </div>
+    </fieldset>
+</form>
+
