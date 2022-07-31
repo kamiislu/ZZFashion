@@ -82,20 +82,30 @@ namespace WEB2022Apr_P02_T3.Controllers
             string id = HttpContext.Session.GetString("LoginID");
             string telNo = formData["txtTelNo"].ToString();
             string emailAddr = formData["txtEmailAddr"].ToString();
-            string address = formData["txtAddress"].ToString();
-            if (telNo == String.Empty)
+            string address = formData["txtAddress"].ToString();    
+            if (customerContext.IsEmailExist(emailAddr, id) == true && customerContext.IsPhoneNumExist(telNo, id) == true)
             {
-                telNo = null;
+                TempData["validateEmail"] = "Email address already exists!";
+                TempData["validatePhoneNum"] = "Phone number already exists!";
             }
-            if (emailAddr == String.Empty)
+            else if (customerContext.IsEmailExist(emailAddr, id) == true)
             {
-                emailAddr = null;
+                //Input validation fails, return to the Create view
+                //to display error message
+                TempData["validateEmail"] = "Email address already exists!";
             }
-            if (address == String.Empty)
+            else if (customerContext.IsPhoneNumExist(telNo, id) == true)
             {
-                address = null;
+                //Input validation fails, return to the Create view
+                //to display error message
+                TempData["validatePhoneNum"] = "Phone number already exists!";
             }
-            customerContext.Update(telNo, emailAddr, address, id);
+            else
+            {
+                //Add staff record to database
+                customerContext.Update(telNo, address, emailAddr, id);
+                //Redirect user to Staff/Index view
+            }
             Customer cust = customerContext.GetDetails(id);
             return View(cust);
         }

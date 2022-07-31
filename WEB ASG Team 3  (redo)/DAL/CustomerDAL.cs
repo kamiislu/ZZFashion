@@ -138,7 +138,7 @@ namespace WEB2022Apr_P02_T3.DAL
                                 WHERE MemberId = @customerID";
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
-            if (phoneNo == null)
+            if (string.IsNullOrEmpty(phoneNo))
             {
                 cmd.Parameters.AddWithValue("@phoneNo", DBNull.Value);
             }
@@ -146,7 +146,7 @@ namespace WEB2022Apr_P02_T3.DAL
             {
                 cmd.Parameters.AddWithValue("@phoneNo", phoneNo);
             }
-            if (address == null)
+            if (string.IsNullOrEmpty(address))
             {
                 cmd.Parameters.AddWithValue("@address", DBNull.Value);
             }
@@ -154,7 +154,7 @@ namespace WEB2022Apr_P02_T3.DAL
             {
                 cmd.Parameters.AddWithValue("@address", address);
             }
-            if (emailAddr == null)
+            if (string.IsNullOrEmpty(emailAddr))
             {
                 cmd.Parameters.AddWithValue("@emailAddr", DBNull.Value);
             }

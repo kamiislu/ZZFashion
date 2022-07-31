@@ -52,18 +52,20 @@
             <label asp-for="MTelNo"
                    class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9 col-md-5">
-                <input asp-for="MTelNo" class="form-control" name="txtTelNo"/>
+                <input asp-for="MTelNo" class="form-control" name="txtTelNo" />
                 <span asp-validation-for="MTelNo"
                       class="text-danger"></span>
+                <span style="color:red;">@TempData["validatePhoneNum"]</span>
             </div>
         </div>
         <div class="form-group row">
             <label asp-for="MEmailAddr"
                    class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9 col-md-5">
-                <input asp-for="MEmailAddr" class="form-control" name="txtEmailAddr"/>
+                <input asp-for="MEmailAddr" class="form-control" name="txtEmailAddr" />
                 <span asp-validation-for="MEmailAddr"
                       class="text-danger"></span>
+                <span style="color:red;">@TempData["validateEmail"]</span>
             </div>
         </div>
         <div class="form-group row">
