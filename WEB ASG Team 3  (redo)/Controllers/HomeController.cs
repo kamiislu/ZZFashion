@@ -38,7 +38,7 @@ namespace WEB2022Apr_P02_T3.Controllers
             // Email address converted to lowercase
             string loginID = formData["txtLoginID"].ToString();
             string password = formData["txtPassword"].ToString();
-            if(loginID != null && password != null)
+            if (loginID != null && password != null)
             {
                 foreach (Staff s in staffList)
                 {
@@ -47,7 +47,7 @@ namespace WEB2022Apr_P02_T3.Controllers
                         // Store Login ID in session with the key “LoginID”
                         HttpContext.Session.SetString("LoginID", loginID);
                         HttpContext.Session.SetString("Role", "Marketing");
-                        if (s.StaffID == "SG-Bishan" || s.StaffID == "SG-Jurong" || s.StaffID == "SG-Orchard")
+                        if (s.StaffID == "SG-Bishan" || s.StaffID == "SG-Jurong" ||  s.StaffID == "SG-Orchard")
                         {
                             s.StaffID = "Sales";
                             return RedirectToAction(s.StaffID.ToString() + "Main");
@@ -55,7 +55,7 @@ namespace WEB2022Apr_P02_T3.Controllers
                         else
                         {
                             return RedirectToAction(s.StaffID.ToString() + "Main");
-                        } 
+                        }
                     }
                     else if (customerContext.ValidatePassword(loginID, password))
                     {
@@ -75,7 +75,6 @@ namespace WEB2022Apr_P02_T3.Controllers
                         }
                     }
                 }
-                TempData["Message"] = "Invalid Login Credentials!";
                 return RedirectToAction("Index");
             }
             else

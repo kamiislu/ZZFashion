@@ -8,21 +8,21 @@ namespace WEB2022Apr_P02_T3.Models
 {
     public class Staff
     {
-        [Display (Name ="Staff ID")]
+        [Display(Name = "Staff ID")]
         public string StaffID { get; set; }
 
-        [Display (Name ="StoreID")]
+        [Display(Name = "StoreID")]
         public string StoreID { get; set; }
 
-        [Display(Name ="Staff Name")]
+        [Display(Name = "Staff Name")]
         public string SName { get; set; }
 
-        [Display(Name ="Staff Gender")]
+        [Display(Name = "Staff Gender")]
         public char SGender { get; set; }
 
-        [Display(Name ="Staff Appointment")]
+        [Display(Name = "Staff Appointment")]
         public string SAppt { get; set; }
-        
+
         [Display(Name = "Staff Telephone Number")]
         public string STelNo { get; set; }
 
