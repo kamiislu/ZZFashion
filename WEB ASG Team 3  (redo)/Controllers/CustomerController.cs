@@ -17,10 +17,11 @@ namespace WEB2022Apr_P02_T3.Controllers
     {
         private FeedbackDAL feedbackContext = new FeedbackDAL();
         private CustomerDAL customerContext = new CustomerDAL();
+        private ResponseDAL responseContext = new ResponseDAL();
         public ActionResult Index(string searchString)
         {
             if ((HttpContext.Session.GetString("Role") == null) ||
-                (HttpContext.Session.GetString("Role") != "SalesPersonnel") ||
+                (HttpContext.Session.GetString("Role") != "SalesPersonnel") &&
                 (HttpContext.Session.GetString("Role") != "Customer"))
             {
                 return RedirectToAction("Index", "Home");
@@ -175,8 +176,40 @@ namespace WEB2022Apr_P02_T3.Controllers
    
             return View();
         }
-        
+        public ActionResult ViewFeedback(List<Feedback> newList)
+        {
+            List<Feedback> feedbackList = feedbackContext.GetAllFeedback();
+            string id = HttpContext.Session.GetString("LoginID");
+            foreach (Feedback f in feedbackList)
+            {
+                if (f.MemberID.ToString() == id)
+                {
+                    newList.Add(f);
+                }
+            }
+            return View(newList);
+        }
 
+        public ActionResult ViewResponse(List<Response> newList)
+        {
+            List<Response> responseList = responseContext.GetAllResponse();
+            List<Feedback> feedbackList = feedbackContext.GetAllFeedback();
+            string id = HttpContext.Session.GetString("LoginID");
+            foreach (Feedback f in feedbackList)
+            {
+                if (f.MemberID.ToString() == id)
+                {
+                    foreach (Response r in responseList)
+                    {
+                        if (f.FeedbackID == r.FeedbackID && r.StaffID == "Marketing")
+                        {
+                            newList.Add(r);
+                        }
+                    }
+                }        
+            }
+            return View(newList);
+        }
 
     }
 }

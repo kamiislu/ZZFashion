@@ -17,7 +17,8 @@ namespace WEB2022Apr_P02_T3.Controllers
         public ActionResult Index()
         {
             if ((HttpContext.Session.GetString("Role") == null) ||
-                (HttpContext.Session.GetString("Role") != "Marketing"))
+                (HttpContext.Session.GetString("Role") != "Marketing") &&
+                (HttpContext.Session.GetString("Role") != "Customer"))
             {
                 return RedirectToAction("Index", "Home");
             }

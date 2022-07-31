@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.Feedback>
+
+@{
+    ViewData["Title"] = "View Feedback";
+}
+
+<h1>View Feedback</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FeedbackID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePosted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FeedbackID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePosted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </td>
+                <td>
+                    <a asp-action="ViewResponse" asp-controller="CUstomer"
+                       asp-route-id="@item.FeedbackID">View Response</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
