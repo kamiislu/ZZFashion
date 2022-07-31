@@ -13,6 +13,19 @@ namespace WEB2022Apr_P02_T3.DAL
     {
         private IConfiguration Configuration { get; }
         private SqlConnection conn;
+        public StaffDAL()
+        {
+            //Read ConnectionString from appsettings.json file
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json");
+            Configuration = builder.Build();
+            string strConn = Configuration.GetConnectionString(
+            "ZZFashionConnectionString");
+            //Instantiate a SqlConnection object with the
+            //Connection String read.
+            conn = new SqlConnection(strConn);
+        }
         public List<Staff> GetAllStaff()
         {
             //Create a SqlCommand object from connection object
@@ -31,12 +44,6 @@ namespace WEB2022Apr_P02_T3.DAL
                     new Staff
                     {
                         StaffID = reader.GetString(0),
-                        StoreID = !reader.IsDBNull(1)? reader.GetString(1): null,
-                        SName = reader.GetString(2),
-                        SGender = reader.GetChar(3),
-                        SAppt = reader.GetString(4),
-                        STelNo = reader.GetString(5),
-                        SEmailAddr = reader.GetString(6),
                         SPassword = reader.GetString(7)
                     });
             }

@@ -75,6 +75,8 @@ namespace WEB2022Apr_P02_T3.Controllers
                         }
                     }
                 }
+                TempData["Message"] = "Invalid Login Credentials!";
+                return RedirectToAction("Index");
             }
             else
             {
