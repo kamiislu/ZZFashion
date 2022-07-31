@@ -76,5 +76,28 @@ namespace WEB2022Apr_P02_T3.DAL
             conn.Close();
             return response;
         }
+        public int Create(Feedback feedback)
+        {
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandText = @"INSERT INTO Feedback (FeedbackID, MemberID,
+                                DateTimePosted,Title, Text, ImageFileName)
+                                OUTPUT INSERTED.Feedback
+                                VALUES(@feedbackID, @memberID, @dateTimePosted, @title, @text, @imagefilename)
+                                    ";
+            cmd.Parameters.AddWithValue("@feedbackID", feedback.FeedbackID);
+            cmd.Parameters.AddWithValue("@MemberID", feedback.MemberID);
+            cmd.Parameters.AddWithValue("@dateTimePosted", feedback.DatePosted);
+            cmd.Parameters.AddWithValue("@title", feedback.Title);
+            cmd.Parameters.AddWithValue("@text", feedback.Text);
+            cmd.Parameters.AddWithValue("@imagefilename", feedback.Image);
+            conn.Open();
+
+            feedback.FeedbackID = (int)cmd.ExecuteScalar();
+
+            conn.Close();
+
+            return feedback.FeedbackID;
+        }
     }
 }

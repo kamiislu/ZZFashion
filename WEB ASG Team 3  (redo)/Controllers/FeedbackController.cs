@@ -34,6 +34,13 @@ namespace WEB2022Apr_P02_T3.Controllers
         // GET: FeedbackController/Create
         public ActionResult Create()
         {
+            string id = HttpContext.Session.GetString("LoginID");// Stop accessing the action if not logged in
+            // or account not in the "Staff" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+            (HttpContext.Session.GetString("Role") != "Customer"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 

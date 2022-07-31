@@ -15,6 +15,7 @@ namespace WEB2022Apr_P02_T3.Controllers
 {
     public class CustomerController : Controller
     {
+        private FeedbackDAL feedbackContext = new FeedbackDAL();
         private CustomerDAL customerContext = new CustomerDAL();
         public ActionResult Index(string searchString)
         {
