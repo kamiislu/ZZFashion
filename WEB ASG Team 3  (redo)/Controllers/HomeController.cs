@@ -16,6 +16,7 @@ namespace WEB2022Apr_P02_T3.Controllers
     {
         private CustomerDAL customerContext = new CustomerDAL();
         private ProductDAL productContext = new ProductDAL();
+        private StaffDAL staffContext = new StaffDAL();
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -32,73 +33,47 @@ namespace WEB2022Apr_P02_T3.Controllers
         [HttpPost]
         public ActionResult StaffLogin(IFormCollection formData)
         {
+            List<Staff> staffList = staffContext.GetAllStaff();
             // Read inputs from textboxes
             // Email address converted to lowercase
             string loginID = formData["txtLoginID"].ToString();
             string password = formData["txtPassword"].ToString();
-            if (loginID == "Marketing" && password == "passMarketing")
+            if(loginID != null && password != null)
             {
-                // Store Login ID in session with the key “LoginID”
-                HttpContext.Session.SetString("LoginID", loginID);
-                HttpContext.Session.SetString("Role", "Marketing");
-
-                // Redirect user to the "StaffMain" view through an action
-                return RedirectToAction("MarketingMain");
-            }
-            else if (loginID == "ProductManager" && password == "passProduct")
-            {
-                // Store Login ID in session with the key “LoginID”
-                HttpContext.Session.SetString("LoginID", loginID);
-                HttpContext.Session.SetString("Role", "ProductManager");
-
-                // Redirect user to the "StaffMain" view through an action
-                return RedirectToAction("ProductMain");
-            }
-            else if (loginID == "SG-Orchard" && password == "passSales")
-            {
-                // Store Login ID in session with the key “LoginID”
-                HttpContext.Session.SetString("LoginID", loginID);
-                HttpContext.Session.SetString("Role", "SalesPersonnel");
-
-                // Redirect user to the "StaffMain" view through an action
-                return RedirectToAction("SalesMain");
-            }
-
-            else if (loginID == "SG-Jurong" && password == "passSales")
-            {
-                // Store Login ID in session with the key “LoginID”
-                HttpContext.Session.SetString("LoginID", loginID);
-                HttpContext.Session.SetString("Role", "SalesPersonnel");
-
-                // Redirect user to the "StaffMain" view through an action
-                return RedirectToAction("SalesMain");
-            }
-
-            else if (loginID == "SG-Bishan" && password == "passSales")
-            {
-                // Store Login ID in session with the key “LoginID”
-                HttpContext.Session.SetString("LoginID", loginID);
-                HttpContext.Session.SetString("Role", "SalesPersonnel");
-
-                // Redirect user to the "StaffMain" view through an action
-                return RedirectToAction("SalesMain");
-            }
-
-            else if (customerContext.ValidatePassword(loginID, password))
-            {
-                // Store Login ID in session with the key “LoginID”
-                HttpContext.Session.SetString("LoginID", loginID);
-                HttpContext.Session.SetString("Role", "Customer");
-                if (password == "AbC@123#")
+                foreach (Staff s in staffList)
                 {
-                    TempData["Title"] = "Change Default Password";
-                    return RedirectToAction("ChangePassword", "Customer");
-                }
-                else
-                {
-                    TempData["Title"] = "Change Password";
-                    // Redirect user to the "CustomerMain" view through an action
-                    return RedirectToAction("CustomerMain");
+                    if (loginID == s.StaffID && password == s.SPassword)
+                    {
+                        // Store Login ID in session with the key “LoginID”
+                        HttpContext.Session.SetString("LoginID", loginID);
+                        HttpContext.Session.SetString("Role", "Marketing");
+                        if (s.StaffID == "SG-Bishan" || s.StaffID == "SG-Jurong" || s.StaffID == "SG-Orchard")
+                        {
+                            s.StaffID = "Sales";
+                            return RedirectToAction(s.StaffID.ToString() + "Main");
+                        }
+                        else
+                        {
+                            return RedirectToAction(s.StaffID.ToString() + "Main");
+                        } 
+                    }
+                    else if (customerContext.ValidatePassword(loginID, password))
+                    {
+                        // Store Login ID in session with the key “LoginID”
+                        HttpContext.Session.SetString("LoginID", loginID);
+                        HttpContext.Session.SetString("Role", "Customer");
+                        if (password == "AbC@123#")
+                        {
+                            TempData["Title"] = "Change Default Password";
+                            return RedirectToAction("ChangePassword", "Customer");
+                        }
+                        else
+                        {
+                            TempData["Title"] = "Change Password";
+                            // Redirect user to the "CustomerMain" view through an action
+                            return RedirectToAction("CustomerMain");
+                        }
+                    }
                 }
             }
             else
