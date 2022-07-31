@@ -22,7 +22,7 @@ namespace WEB2022Apr_P02_T3.Models
         [Display(Name = "Title")]
         public string Title { get; set; }
 
-        [Display(Name ="Feedback")]
+        [Display(Name = "Text")]
         public string? Text { get; set; }
 
         public string? Image { get; set; }
