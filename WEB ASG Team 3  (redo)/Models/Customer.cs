@@ -26,7 +26,7 @@ namespace WEB2022Apr_P02_T3.Models
         [Required]
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
-        public DateTime? MBirthDate { get; set; }
+        public DateTime MBirthDate { get; set; }
 
         [Display(Name = "Residential Address")]
         [StringLength(250, ErrorMessage = "Residential Address cannot exceed 20 characters!")]

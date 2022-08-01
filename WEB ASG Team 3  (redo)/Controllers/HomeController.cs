@@ -79,17 +79,18 @@ namespace WEB2022Apr_P02_T3.Controllers
                             return RedirectToAction("CustomerMain");
                         }
                     }
+                    else
+                    {
+                        // Store an error message in TempData for display at the index view
+                        TempData["Message"] = "Invalid Login Credentials!";
+
+                        // Redirect user back to the index view through an action
+                        return RedirectToAction("Index");
+                    }
                 }
                 return RedirectToAction("Index");
             }
-            else
-            {
-                // Store an error message in TempData for display at the index view
-                TempData["Message"] = "Invalid Login Credentials!";
-
-                // Redirect user back to the index view through an action
-                return RedirectToAction("Index");
-            }
+            return RedirectToAction("Index");
         }
         public ActionResult MarketingMain()
         {
@@ -124,6 +125,23 @@ namespace WEB2022Apr_P02_T3.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public ActionResult ValidateBirthdayMonth()
+        {
+            int thisMonth = DateTime.Now.Month;
+            string id = HttpContext.Session.GetString("LoginID");
+            Customer cust = customerContext.GetDetails(id);
+            int custBday = cust.MBirthDate.Month;
+            if (custBday == thisMonth)
+            {
+                TempData["BirthdayMessage"] = "Happy birthday! It's the birthday month for you! Enjoy additional 15% " +
+                    "discount for every purchase this month!";
+                return RedirectToAction("CustomerMain");
+            }
+            else
+            {
+                return RedirectToAction("CustomerMain");
+            }
         }
     }
 }
