@@ -6,6 +6,6 @@ pipelines:
         clone:
           enabled: false
         script:
-          - git clone --bare git@bitbucket.org:kamiislu/ZZFashion.git
+          - git clone --bare git@bitbucket.org:Luismika Lim/WEB2022Apr_P02_T3.git
           - cd RepoName.git
-          - git push --mirror git@github.com:kamiislu/ZZFashion.git
+          - git push --mirror git@github.com:Luismika Lim/WEB2022Apr_P02_T3.git
