@@ -69,7 +69,7 @@ namespace WEB2022Apr_P02_T3.Controllers
                 return RedirectToAction("Index");
             }
             else
-            {
+            {   
                 //Input validation fails, return to the Create view
                 //to display error message
                 return View(response);

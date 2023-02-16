@@ -93,14 +93,29 @@ namespace WEB2022Apr_P02_T3.Controllers
         }
         public ActionResult MarketingMain()
         {
+            if ((HttpContext.Session.GetString("Role") == null) ||
+               (HttpContext.Session.GetString("Role") != "Marketing"))
+            {
+                return RedirectToAction("Index");
+            }
             return View();
         }
         public ActionResult ProductMain()
         {
+            if ((HttpContext.Session.GetString("Role") == null) ||
+               (HttpContext.Session.GetString("Role") != "ProductManager"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         public ActionResult CustomerMain()
         {
+            if ((HttpContext.Session.GetString("Role") == null) ||
+               (HttpContext.Session.GetString("Role") != "Customer"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         public ActionResult SalesMain()

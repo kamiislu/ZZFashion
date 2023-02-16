@@ -16,7 +16,7 @@ namespace WEB2022Apr_P02_T3.Models
 
         [Display(Name = "Date Posted")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString ="{0:dd/mm/yyyy}")]
+        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
         public DateTime DatePosted { get; set; }
 
         [Display(Name = "Title")]
