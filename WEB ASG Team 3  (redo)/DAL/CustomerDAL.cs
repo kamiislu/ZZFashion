@@ -51,8 +51,7 @@ namespace WEB2022Apr_P02_T3.DAL
                     // (char) 0 - ASCII Code 0 - null value
                     customer.MGender = !reader.IsDBNull(2) ?
                     reader.GetString(2)[0] : (char)0;
-                    customer.MBirthDate = !reader.IsDBNull(3) ?
-                    reader.GetDateTime(3) : (DateTime?)null;
+                    customer.MBirthDate = reader.GetDateTime(3);
                     customer.MAddress = !reader.IsDBNull(4) ?
                     reader.GetString(4) : null;
                     customer.MCountry = !reader.IsDBNull(5) ?
@@ -354,7 +353,7 @@ namespace WEB2022Apr_P02_T3.DAL
             { //Records found
                 while (reader.Read())
                 {
-                    if (reader.GetString(0) == memberId)
+                    if (reader.GetString(0) != memberId)
                         //The email address is used by another staff
                         memberFound = true;
                 }
@@ -366,6 +365,36 @@ namespace WEB2022Apr_P02_T3.DAL
             reader.Close();
             conn.Close();
             return memberFound;
+        }
+        public bool IsBirthdaySame(DateTime thisMonth, string id)
+        {
+            bool birthday = false;
+
+            //Create a SqlCommand object and specify the SQL statement 
+            //to get a staff record with the email address to be validated
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT MBirthDate FROM Customer 
+                             WHERE MemberId= @selectedMemberId";
+            cmd.Parameters.AddWithValue("@selectedMemberId", id);
+            //Open a database connection and execute the SQL statement
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            { //Records found
+                while (reader.Read())
+                {
+                    if (reader.GetDateTime(3) != thisMonth)
+                        //The email address is used by another staff
+                        birthday = true;
+                }
+            }
+            else
+            { //No record
+                birthday = false; // The email address given does not exist
+            }
+            reader.Close();
+            conn.Close();
+            return birthday;
         }
 
     }

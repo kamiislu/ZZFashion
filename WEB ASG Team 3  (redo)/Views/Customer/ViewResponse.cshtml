@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WEB2022Apr_P02_T3.Models.Response>
+
+@{
+    ViewData["Title"] = "View Response";
+}
+
+<h1>View Response</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ResponseID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePosted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResponseID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StaffID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePosted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
