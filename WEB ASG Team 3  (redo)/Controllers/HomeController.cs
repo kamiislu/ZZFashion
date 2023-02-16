@@ -133,6 +133,7 @@ namespace WEB2022Apr_P02_T3.Controllers
             HttpContext.Session.Clear();
             // Call the Index action of Home controller
             return RedirectToAction("Index");
+            // test
         }
 
 
